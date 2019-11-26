@@ -41,10 +41,9 @@ public class PlaylistsDAO {
 	}
 	
 	private Playlist generatePlaylist(ResultSet resultSet) throws Exception {
-		//fix later
-		//String name  = resultSet.getString("name");
-		//Double value = resultSet.getDouble("value");
-		//return new Constant (name, value);
-		return new Playlist();
+		String name  = resultSet.getString("name");
+		String seg_id  = resultSet.getString("seg_id");
+		int seg_order = resultSet.getInt("seg_order");
+		return new Playlist(name, seg_id, seg_order);
 	}
 }

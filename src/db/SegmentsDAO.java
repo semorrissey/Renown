@@ -40,10 +40,10 @@ public class SegmentsDAO {
 	}
 
 	private Segment generateSegment(ResultSet resultSet) throws Exception {
-		//fix later
-		//String name  = resultSet.getString("name");
-		//Double value = resultSet.getDouble("value");
-		//return new Constant (name, value);
-		return new Segment();
+		String id  = resultSet.getString("id");
+		String character = resultSet.getString("character");
+		String line  = resultSet.getString("line");
+		boolean availableRemote  = resultSet.getBoolean("availableRemote");
+		return new Segment(id, character, line, availableRemote);
 	}
 }
