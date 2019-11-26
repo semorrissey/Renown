@@ -43,7 +43,8 @@ public class SegmentsDAO {
 		String id  = resultSet.getString("seg_id");
 		String character = resultSet.getString("character");
 		String line  = resultSet.getString("line");
+		String url = resultSet.getString("url");
 		boolean availableRemote  = resultSet.getBoolean("availableRemote");
-		return new Segment(id, character, line, availableRemote);
+		return new Segment(id, character, line, url, availableRemote);
 	}
 }
