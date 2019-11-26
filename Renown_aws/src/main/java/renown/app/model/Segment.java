@@ -4,21 +4,24 @@ public class Segment {
 	public final String id;
 	public final String character;
 	public final String line;
+	public final String url;
 	public boolean availableRemote;
 	public boolean system;            // when TRUE this is actually stored in S3 bucket
 	
-	public Segment (String id, String character, String line) {
+	public Segment (String id, String character, String line, String url) {
 		this.id = id;
 		this.character = character;
 		this.line = line;
+		this.url = url;
 		this.availableRemote = true;
 	}
 	
-	public Segment (String id, String character, String line, boolean system) {
+	public Segment (String id, String character, String line, String url, boolean system) {
 		this.id = id;
 		this.character = character;
 		this.line = line;
 		this.availableRemote = true;
+		this.url = url;
 		this.system = system;
 	}
 	
