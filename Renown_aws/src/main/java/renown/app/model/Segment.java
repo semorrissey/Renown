@@ -1,4 +1,4 @@
-package src.model;
+package renown.app.model;
 
 public class Segment {
 	public final String id;

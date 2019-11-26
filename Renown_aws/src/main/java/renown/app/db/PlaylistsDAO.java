@@ -1,11 +1,11 @@
-package src.db;
+package renown.app.db;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.model.*;
+import renown.app.model.*;
 
 public class PlaylistsDAO {
 	

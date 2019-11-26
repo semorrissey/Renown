@@ -1,10 +1,10 @@
-package src.db;
+package renown.app.db;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.model.*;
+import renown.app.model.*;
 
 public class SegmentsDAO {
 

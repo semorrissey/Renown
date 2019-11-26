@@ -1,9 +1,9 @@
-package src.http;
+package renown.app.http;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.model.Segment;
+import renown.app.model.Segment;
 
 public class AllSegmentsResponse {
 	public final List<Segment> list;

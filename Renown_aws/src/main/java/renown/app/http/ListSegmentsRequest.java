@@ -1,4 +1,4 @@
-package src.http;
+package renown.app.http;
 
 public class ListSegmentsRequest {
 	

@@ -1,9 +1,9 @@
-package src.http;
+package renown.app.http;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.model.Playlist;
+import renown.app.model.Playlist;
 
 public class AllPlaylistsResponse {
 	public final List<Playlist> list;

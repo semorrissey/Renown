@@ -1,4 +1,4 @@
-package src.db;
+package renown.app.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
