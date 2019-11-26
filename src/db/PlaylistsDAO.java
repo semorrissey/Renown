@@ -1,11 +1,11 @@
-package db;
+package src.db;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.*;
+import src.model.*;
 
 public class PlaylistsDAO {
 	

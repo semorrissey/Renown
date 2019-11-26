@@ -1,10 +1,10 @@
-package db;
+package src.db;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.*;
+import src.model.*;
 
 public class SegmentsDAO {
 

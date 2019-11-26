@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="libs/gson-2.6.2.jar"/>
-	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.6.jar"/>
-	<classpathentry kind="lib" path="libs/simpleJSON.jar"/>
-=======
->>>>>>> 9761d852b37646e494f66b88b6f6c159b838793c
+	<classpathentry kind="src" path=""/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="libs/gson-2.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/mysql-connector-java-5.1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/simpleJSON.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
