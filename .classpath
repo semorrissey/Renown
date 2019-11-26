@@ -2,8 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/ericreardon/Documents/Soft Eng/AWSCalculator 2/libs/mysql-connector-java-5.1.6.jar"/>
-	<classpathentry kind="lib" path="/Users/ericreardon/Documents/Soft Eng/AWSCalculator 2/libs/gson-2.6.2.jar"/>
-	<classpathentry kind="lib" path="/Users/ericreardon/Documents/Soft Eng/AWSCalculator 2/libs/simpleJSON.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
