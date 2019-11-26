@@ -1,16 +1,22 @@
+<!DOCTYPE html>
 <html>
 <body>
 <h1>Renown</h1>
 <p>This is a user perspective</p>
 <link rel="stylesheet" type="text/css" href="test.css">
+    
+<script type="text/javascript" src="renown.js">
+   showPlaylists();
+    </script>    
+
     <div class ="topnav">
         <a href ="#segments">Library</a>
-        <a href = "#playlist">Playlist</a>
+        <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
         <a href = "#upload"> Upload</a>
     </div>
     <div class ="playlistArea">
     <div>
-        <input type="text" placeholder="Playlist Name" class="input">
+        <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''" oninput="getPlaylistNames()">
          <p class = "playlistp">New Playlist Name :</p>
         
     </div>
@@ -20,18 +26,15 @@
         <input type="text" placeholder="Search Phrase ">
 </div>
     
-    <div class = "tabs">
-    <img src="16f025f820c39b265f9941610361d672.png" class = "pictures">
-        <img src="16f025f820c39b265f9941610361d672.png" class = "pictures">
+    <div class = "tabs" id="list">
     </div>
         <div class = "interactArea">
-      <div style = "float: right;"></div>
+            <img class="playButton" src="Play-Button-Transparent-Background.png">
         </div>
         <div class="timelineArea">
         <p>Timeline</p>
     </div>
     </div>
-    
 
 </body>
 </html>

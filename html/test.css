@@ -75,7 +75,7 @@ float: right;
 .tabs{
     overflow-x: hidden;
     overflow-y:scroll;
-    background-color: black;
+    background-color: floralwhite;
     padding:10px;
     width: 153px;
     height: 396px;
@@ -93,7 +93,7 @@ float: right;
     position: relative;
     width:auto;
     height:400px;
-    background-color: aqua;
+    background-color: indianred;
     display: inline-block;
 }
 .playlistArea{
@@ -104,8 +104,8 @@ float: right;
 
  .playButton{
      display: inline;
-     width:49;
-     padding-left: 50px;
+     width:49px;
+    
 }
 
 .timelineArea{
