@@ -6,8 +6,8 @@ videoNames.push("KIRK1.ogg");
 videoNames.push("KIRK2.ogg");
 videoNames.push("LINDSROM1.ogg");
 videoNames.push("MCCOY1.ogg");
-videoNames.push("SPOK1.ogg");
-videoNames.push("SPOK2.ogg");
+videoNames.push("SPOCK1.ogg");
+videoNames.push("SPOCK2.ogg");
 videoNames.push("SULU1.ogg");
 
 
