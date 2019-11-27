@@ -13,14 +13,17 @@ videoNames.push("SULU1.ogg");
 
 
 function addVideos(){
-    var i = 0;
+    var i ;
     for(i = 0; i<videoNames.length;i++){
     var videoElement = document.createElement('video');
-    document.getElementById('tb').appendChild(videoElement);
     var source = document.createElement('source');
     source.src = videoNames[i];
-    source.type = "type/ogg";
-    videoElement.appendChild(source);
+    source.type = "video/ogg";
+    videoElement.controls = true;
+        videoElement.width = "153";
+        videoElement.height = '180';
+    videoElement.append(source);
+    document.getElementById('tb').appendChild(videoElement);
     }
 }
 
