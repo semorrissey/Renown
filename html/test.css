@@ -107,7 +107,7 @@ float: right;
      width:49px;
     
 }
-button{
+.play button{
     float:right;
     position: relative;
 }

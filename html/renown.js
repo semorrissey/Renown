@@ -10,9 +10,15 @@ videoNames.push("SPOCK1.ogg");
 videoNames.push("SPOCK2.ogg");
 videoNames.push("SULU1.ogg");
 
-
+function removeVideos(){
+    var myNode = document.getElementById("tb");
+  while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+  }
+}
 
 function addVideos(){
+    removeVideos();
     var i ;
     for(i = 0; i<videoNames.length;i++){
     var videoElement = document.createElement('video');
@@ -38,6 +44,7 @@ function getPlaylistNames(){
 }
 
 function showPlaylists(){  
+    removeVideos();
 var videoElement = document.getElementById('video');
 if(videoElement){
 videoElement.remove();
