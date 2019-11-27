@@ -4,11 +4,8 @@
 <h1>Renown</h1>
 <p>This is a user perspective</p>
 <link rel="stylesheet" type="text/css" href="test.css">
-    
 <script type="text/javascript" src="renown.js">
-   showPlaylists();
-    </script>    
-
+    </script>
     <div class ="topnav">
         <a href ="#segments">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
@@ -16,7 +13,7 @@
     </div>
     <div class ="playlistArea">
     <div>
-        <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''" oninput="getPlaylistNames()">
+        <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''" oninput="myFunction()">
          <p class = "playlistp">New Playlist Name :</p>
         
     </div>
@@ -26,7 +23,10 @@
         <input type="text" placeholder="Search Phrase ">
 </div>
     
-    <div class = "tabs" id="list">
+    <div class = "tabs" id="tb">
+        <video id = "video" controls>
+            <source src="FOX1.ogg" type = "video/ogg">
+        </video>
     </div>
         <div class = "interactArea">
             <img class="playButton" src="Play-Button-Transparent-Background.png">
