@@ -22,7 +22,6 @@ var videoElement = document.getElementById('video');
 videoElement.remove();
  var i;
         for(i = 0; i<playListNames.length; i++){
-            var tabs = document.getElementById('tb').innerHTML;
-            tabs = tabs + playListNames[i].toString;
+            var tabs = document.getElementById('tb').write(playListNames[i].toString);
         }
 }  
