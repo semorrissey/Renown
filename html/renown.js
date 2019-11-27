@@ -1,13 +1,14 @@
 /*eslint no-console: "error"*/
 var playListNames = [];
-/*
+
 function getPlaylistNames(){
     var nameOfPlaylist = document.getElementById('playlistName').value;
     playListNames.push(nameOfPlaylist);
-    Console.log(playListNames);
+    console.log(playListNames);
+    console.log("hello");
     return false;
 }
-    
+/*    
 function showPlaylists(){
         var i;
         for(i = 0; i<playListNames.length; i++){
@@ -18,7 +19,10 @@ function showPlaylists(){
     */
 function showPlaylists(){  
 var videoElement = document.getElementById('video');
-videoElement.pause();
-videoElement.removeAttribute('src'); // empty source
-videoElement.load();
+videoElement.remove();
+ var i;
+        for(i = 0; i<playListNames.length; i++){
+            var tabs = document.getElementById('tb').innerHTML;
+            tabs = tabs + playListNames[i].toString;
+        }
 }  
