@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import renown.app.http.*;
 import renown.app.model.Playlist;
+import renown.app.model.Playlistname;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.
@@ -14,13 +15,13 @@ import renown.app.model.Playlist;
 public class ListPlaylistsTest extends LambdaTest {
 	
     @Test
-    public void testListSegments() throws IOException {
+    public void testListPlaylists() throws IOException {
     	ListRDSPlaylistsHandler handler = new ListRDSPlaylistsHandler();
 
         AllPlaylistsResponse resp = handler.handleRequest(null, createContext("list"));
         
         boolean Test = false;
-        for (Playlist p : resp.list) {
+        for (Playlistname p : resp.list) {
         	if (p.name.equals("Test")) { Test = true; break; }
         }
         Assert.assertTrue("Test Needs to exist in the constants table (from tutorial) for this test case to work.", Test);

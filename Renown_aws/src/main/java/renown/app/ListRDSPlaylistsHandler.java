@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.*;
 import renown.app.db.PlaylistsDAO;
 import renown.app.http.*;
 import renown.app.model.Playlist;
+import renown.app.model.Playlistname;
 
 public class ListRDSPlaylistsHandler implements RequestHandler<ListPlaylistsRequest,AllPlaylistsResponse> {
 
@@ -17,11 +18,11 @@ public class ListRDSPlaylistsHandler implements RequestHandler<ListPlaylistsRequ
 	 * 
 	 * @throws Exception 
 	 */
-	List<Playlist> getPlaylists() throws Exception {
+	List<Playlistname> getPlaylists() throws Exception {
 		logger.log("in getPlaylists");
 		PlaylistsDAO dao = new PlaylistsDAO();
 		
-		return dao.getAllPlaylists();
+		return dao.getAllPlaylistnames();
 	}
 	
 	@Override
@@ -35,9 +36,9 @@ public class ListRDSPlaylistsHandler implements RequestHandler<ListPlaylistsRequ
 		}
 		AllPlaylistsResponse response;
 		try {
-			List<Playlist> list = getPlaylists();
-			ArrayList<Playlist> segList = new ArrayList<>();
-			for (Playlist p : list) {
+			List<Playlistname> list = getPlaylists();
+			ArrayList<Playlistname> segList = new ArrayList<>();
+			for (Playlistname p : list) {
 					segList.add(p);
 			}
 			

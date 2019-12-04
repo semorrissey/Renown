@@ -46,7 +46,7 @@ public class PlaylistsDAO {
 		List<Playlist> allPlaylists = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
-			String query = "SELECT * FROM playlists NATURAL JOIN playlistnames";
+			String query = "SELECT * FROM playlists";
 			ResultSet resultSet = statement.executeQuery(query);
 
 			while (resultSet.next()) {
