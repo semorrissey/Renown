@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import renown.app.model.Segment;
 import renown.app.model.Playlist;
+import renown.app.model.Playlistname;
 
 public class TestDB {
 
@@ -29,8 +30,8 @@ public class TestDB {
 	public void testAllPlaylists() {
 	    PlaylistsDAO sd = new PlaylistsDAO();
 	    try {
-	    	List<Playlist> list = sd.getAllPlaylists();
-			for (Playlist p : list) {
+	    	List<Playlistname> list = sd.getAllPlaylistnames();
+			for (Playlistname p : list) {
 				System.out.println("playlist " + p.name);
 			}
 	    } catch (Exception e) {
