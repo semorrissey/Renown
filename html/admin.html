@@ -4,19 +4,22 @@
 <h1>Renown</h1>
 <p>This is an admin perspective</p>
 <link rel="stylesheet" type="text/css" href="test.css">
-<script type="text/javascript" src="renown.js">
+
+<script type="text/javascript" src="renown.js" >
     </script>
-    <script type="text/javascript" src="/js/get_segmentList.js"></script>
+
     <div class ="topnav">
         <a href ="#segments" onclick = "addVideos()">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
-        <a href = "#upload"> Upload</a>
-        <a href= "#delete">Delete Playlist</a>
-       <input type="text" placeholder="Add a Remote Site URL..." class="input"  onfocus="this.value = ''">
+        <a href= "#delete" >Delete Selected Playlist</a>
+        <button type = "submit" class = "input">Upload File</button>
+        <input type = 'file' class ="input">
+         <button type = "submit" class="input"> Submit URL</button>
+       <input type="text" placeholder="Add a Remote Site URL..." class="input"  onfocus="this.value = ''">      
     </div>
     <div class ="playlistArea">
     <div class = "play">
-         <button type="submit" onclick="getPlaylistNames()">Submit</button>
+         <button type="submit" onclick="getPlaylistNames()">Create Playlist</button>
         <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''">
          <p class = "playlistp">New Playlist Name :</p>
         
@@ -25,11 +28,14 @@
     <div class = "searchInput">
         
   <input type="text" placeholder="Search Name">
+        <button type ="submit">Search Name</button>
         <input type="text" placeholder="Search Phrase ">
-        <button type ="text">mark</button>
+        <button type = "submit">Search Phrase</button>
+        <button type ="text">Mark Selected</button>
 </div>
     
     <div class = "tabs" id="tb">
+        
     </div>
         <div class = "interactArea">
             <img class="playButton" src="Play-Button-Transparent-Background.png">
