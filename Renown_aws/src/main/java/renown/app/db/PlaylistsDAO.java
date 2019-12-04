@@ -20,6 +20,28 @@ public class PlaylistsDAO {
 		}
 	}
 	
+	public Playlistname getPlaylistname(String name) throws Exception {
+        
+        try {
+            Playlistname playlistname = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlistnames WHERE name=?;");
+            ps.setString(1,  name);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                playlistname = generatePlaylistname(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+            
+            return playlistname;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting playlistname: " + e.getMessage());
+        }
+    }
+	
 	public List<Playlistname> getAllPlaylistnames() throws Exception {
 
 		List<Playlistname> allPlaylistnames = new ArrayList<>();
@@ -78,6 +100,29 @@ public class PlaylistsDAO {
 
         } catch (Exception e) {
             throw new Exception("Failed to delete playlist: " + e.getMessage());
+        }
+    }
+	
+    public boolean addPlaylist(Playlistname playlist) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlistnames WHERE name = ?;");
+            ps.setString(1, playlist.name);
+            ResultSet resultSet = ps.executeQuery();
+            
+            // already present?
+            while (resultSet.next()) {
+                Playlistname p = generatePlaylistname(resultSet);
+                resultSet.close();
+                return false;
+            }
+
+            ps = conn.prepareStatement("INSERT INTO playlistnames (name) values(?);");
+            ps.setString(1,  playlist.name);
+            ps.execute();
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to insert constant: " + e.getMessage());
         }
     }
 	
