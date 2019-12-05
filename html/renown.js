@@ -282,6 +282,7 @@ function removeFromTimeline(video){
 
 window.onclick = e =>{
     selectedVideo = e.target;
+    console.log(selectedVideo.innerHTML);
 }
 
 window.onload = function() {
