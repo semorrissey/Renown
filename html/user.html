@@ -10,12 +10,13 @@
     <div class ="topnav">
         <a href ="#segments" onclick = "addVideos()">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
-        <a href = "#upload"> Upload</a>
-        <a href= "#delete">Delete Playlist</a>
+        <a href= "#delete" >Delete Selected Playlist</a>
+       <button type = "submit" class = "input">Upload Segment</button>
+        <input type = 'file' class ="input">
     </div>
     <div class ="playlistArea">
-    <div>
-         <button type="submit" onclick="getPlaylistNames()">Submit</button>
+    <div class="play">
+    <button type="submit" onclick="getPlaylistNames()">Create Playlist</button>
         <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''">
          <p class = "playlistp">New Playlist Name :</p>
         
@@ -23,7 +24,10 @@
         
     <div class = "searchInput">
   <input type="text" placeholder="Search Name">
+        <button type ="submit">Search Name</button>
         <input type="text" placeholder="Search Phrase ">
+        <button type = "submit">Search Phrase</button>
+        <button type ="text"> Delete Selected Video</button>
 </div>
     
     <div class = "tabs" id="tb">
@@ -34,6 +38,9 @@
         </div>
         <div class="timelineArea">
         <p>Timeline</p>
+             <button onclick="removeFromTimeline()">Remove Video</button>
+            <div id="videoArea"  onclick="addToTimeline()">
+            
     </div>
     </div>
 
