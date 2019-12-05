@@ -149,7 +149,7 @@ public class PlaylistsDAO {
     
     public boolean appendSegment(Playlist playlist) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (name, seg_id, order) values(?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (name, seg_id, seg_order) values(?,?,?);");
             ps.setString(1,  playlist.name);
             ps.setString(2,  playlist.seg_id);
             ps.setInt(3,  playlist.seg_order);
