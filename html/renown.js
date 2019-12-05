@@ -13,6 +13,9 @@ var base_url = "https://5b7elq1ly4.execute-api.us-east-2.amazonaws.com/alpha/";
 
 var list_segments   = base_url + "listsegments";    // GET
 var list_playlists  = base_url + "listplaylists";    // GET
+var create_Playlist = base_url + "createplaylist";    // POST
+var delete_Playlist = base_url + "deleteplaylist";    // POST
+var delete_Segment= base_url + "deletesegment";    // POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -33,18 +36,19 @@ function refreshSegmentsList() {
 }
 
 function refreshPlaylistsList() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", list_playlists, true);
-    xhr.send();
-    console.log("sent");
-    
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", list_playlists, true);
+   xhr.send();
+   
+   console.log("sent");
+
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       console.log ("XHR:" + xhr.responseText);
-      processPlaylistResponse(xhr.responseText);
+       return processPlaylistListResponse(xhr.responseText);
     } else {
-      processPlaylistResponse("N/A");
+     return processPlaylistListResponse("N/A");
     }
   };
 }
@@ -74,17 +78,13 @@ function processListResponse(result) {
     var savailableRemote = segmentJson["availableRemote"];
     var sysvar = segmentJson["system"];
 
-    videoNames.push(surl);
-      charNames.push(scharacter);
-      phrases.push(sline);
   }
-    datalist = js.list;
+
   // Update computation result
     return output;
-    
 }
 
-function processPlaylistResponse(result) {
+function processPlaylistListResponse(result) {
   console.log("res:" + result);
   // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
@@ -96,18 +96,115 @@ function processPlaylistResponse(result) {
     console.log(segmentJson);
     
     var pname = segmentJson["name"];
-    var pseg_id = segmentJson["seg_id"];
-    var pseg_order = segmentJson["seg_order"];
-    var sysvar = segmentJson["system"];
-      if(!playListNames.includes(pname)){
-    playListNames.push(pname);
-      }
+    output = output + "<div id=\"play" + pname + "\"><b>" + pname + ":</b> = " + pname + "<br></div>";
   }
-
-  // Update computation result
     return output;
 }
 
+function handleCreatePlaylistClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["name"] = form.playlistName.value; 
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", create_Playlist, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processCreateResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processCreateResponse("N/A");
+    }
+  };
+}
+
+function processCreateResponse(result) {
+  // Can grab any DIV or SPAN HTML element and can then manipulate its
+  // contents dynamically via javascript
+  console.log("result:" + result);
+}
+
+function handleDeletePlaylistClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["name"] = selectedVideo.innerHTML;
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", delete_Playlist, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processDeleteResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processDeleteResponse("N/A");
+    }
+  };
+}
+    
+function processDeleteResponse(result) {
+  // Can grab any DIV or SPAN HTML element and can then manipulate its
+  // contents dynamically via javascript
+  console.log("deleted :" + result);
+}
+
+function handleDeleteSegmentClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["name"] = selectedVideo; 
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", delete_Segment, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processDeleteResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processDeleteResponse("N/A");
+    }
+  };
+}
 
 function removeVideos(){
     var myNode = document.getElementById("tb");
