@@ -4,6 +4,8 @@ var phrases = [];
 var playListNames = [];
 
 var dataList;
+var selectedVideo;
+var previousVideo;
 
 // all access driven through BASE. Must end with a SLASH
 // be sure you change to accommodate your specific API Gateway entry point
@@ -142,6 +144,8 @@ function addVideos(){
     videoElement.controls = true;
         videoElement.width = "153";
         videoElement.height = '180';
+        videoElement.id = "video" + i;
+        videoElement.onclick =""
     videoElement.append(source);
     document.getElementById('tb').appendChild(videoElement);
     }
@@ -168,9 +172,26 @@ function showPlaylists(){
         }
 } 
 
+function addToTimeline(){
+    var movedObj = selectedVideo.cloneNode(true);
+    document.getElementById("videoArea").appendChild(movedObj);
+}
+
+function removeFromTimeline(video){
+    var movedObj = selectedVideo.cloneNode(true);
+    document.getElementById("videoArea").removeChild(movedObj);
+}
+
+
+window.onclick = e =>{
+    selectedVideo = e.target;
+}
+
 window.onload = function() {
     refreshSegmentsList();
     refreshPlaylistsList();
+
 }
+
 
 

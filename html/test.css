@@ -124,9 +124,22 @@ float: right;
     background-color: darkgrey;
     display:block;
 }
+.timelineArea button{
+    position: static;
+    float: right;
+}
 
 .searchInput input{
     display: block;
     box-sizing: border-box;
     vertical-align: middle;
+}
+#videoArea{
+    position:static;
+    min-width: 100px;
+    min-height:  200px;
+    width: auto;
+    height: auto;
+    background-color: coral;
+    display:inline-block;
 }

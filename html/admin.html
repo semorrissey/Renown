@@ -12,7 +12,7 @@
         <a href ="#segments" onclick = "addVideos()">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
         <a href= "#delete" >Delete Selected Playlist</a>
-        <button type = "submit" class = "input">Upload File</button>
+        <button type = "submit" class = "input">Upload Segment</button>
         <input type = 'file' class ="input">
          <button type = "submit" class="input"> Submit URL</button>
        <input type="text" placeholder="Add a Remote Site URL..." class="input"  onfocus="this.value = ''">      
@@ -40,8 +40,12 @@
         <div class = "interactArea">
             <img class="playButton" src="Play-Button-Transparent-Background.png">
         </div>
-        <div class="timelineArea">
+        <div id="timelineArea" class="timelineArea">
         <p>Timeline</p>
+            <button onclick="removeFromTimeline()">Remove Video</button>
+            <div id="videoArea"  onclick="addToTimeline()">
+            
+            </div>
     </div>
     </div>
 
