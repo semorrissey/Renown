@@ -78,6 +78,10 @@ function processListResponse(result) {
     var savailableRemote = segmentJson["availableRemote"];
     var sysvar = segmentJson["system"];
 
+    videoNames.push(surl);
+    charNames.push(scharacter);
+    phrases.push(sline);
+      
   }
 
   // Update computation result
@@ -97,15 +101,17 @@ function processPlaylistListResponse(result) {
     
     var pname = segmentJson["name"];
     output = output + "<div id=\"play" + pname + "\"><b>" + pname + ":</b> = " + pname + "<br></div>";
+      
+    playListNames.push(pname);
   }
     return output;
 }
 
-function handleCreatePlaylistClick(e)
+function handleCreatePlaylistClick(e,name)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = form.playlistName.value; 
+    data["name"] = name; 
     
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -250,11 +256,10 @@ function addVideos(){
 }
 
 
-function getPlaylistNames(){
+function getPlaylistNames(e){
     var nameOfPlaylist = document.getElementById('playlistName').value;
+    handleCreatePlaylistClick(e,nameOfPlaylist);
     playListNames.push(nameOfPlaylist);
-    console.log(playListNames);
-    console.log("hello");
     return false;
 }
 

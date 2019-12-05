@@ -11,7 +11,7 @@
     <div class ="topnav">
         <a href ="#segments" onclick = "addVideos()">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
-        <a href= "#delete" >Delete Selected Playlist</a>
+        <a href= "#delete" onclick="handleDeletePlaylistClick(this);">Delete Selected Playlist</a>
         <button type = "submit" class = "input">Upload Segment</button>
         <input type = 'file' class ="input">
          <button type = "submit" class="input"> Submit URL</button>
@@ -19,7 +19,7 @@
     </div>
     <div class ="playlistArea">
     <div class = "play">
-         <button type="submit" onclick="getPlaylistNames()">Create Playlist</button>
+         <button type="submit" onclick="getPlaylistNames(this)">Create Playlist</button>
         <input type="text" placeholder="Playlist Name" class="input" id="playlistName" onfocus="this.value = ''">
          <p class = "playlistp">New Playlist Name :</p>
         
