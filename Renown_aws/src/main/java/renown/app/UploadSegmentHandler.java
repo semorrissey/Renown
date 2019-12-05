@@ -34,7 +34,7 @@ public class UploadSegmentHandler implements RequestHandler<UploadSegmentRequest
 	 * @throws Exception 
 	 */
 	public boolean uploadSegment(String seg_id, String character, String line, String url) throws Exception { 
-		if (logger != null) { logger.log("in createConstant"); }
+		if (logger != null) { logger.log("in uploadSegment"); }
 		SegmentsDAO dao = new SegmentsDAO();
 		
 		// check if present

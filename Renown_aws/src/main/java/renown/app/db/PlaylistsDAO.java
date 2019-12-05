@@ -122,7 +122,42 @@ public class PlaylistsDAO {
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to insert constant: " + e.getMessage());
+            throw new Exception("Failed to insert playlist: " + e.getMessage());
+        }
+    }
+    
+    public int getNumSegments(String name) throws Exception {
+        try {
+            int numSegments = -1;
+            PreparedStatement ps = conn.prepareStatement("SELECT MAX(seg_order) AS seg_order FROM playlists WHERE playlists.name=?;");
+            ps.setString(1,  name);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                numSegments = generateInteger(resultSet) + 1;
+            }
+            resultSet.close();
+            ps.close();
+            
+            return numSegments;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting segment order from: " + name + ": " + e.getMessage());
+        }
+    }
+    
+    public boolean appendSegment(Playlist playlist) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (name, seg_id, seg_order) values(?,?,?);");
+            ps.setString(1,  playlist.name);
+            ps.setString(2,  playlist.seg_id);
+            ps.setInt(3,  playlist.seg_order);
+            ps.execute();
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Failed to append segment: " + e.getMessage());
         }
     }
 	
@@ -136,5 +171,10 @@ public class PlaylistsDAO {
 	private Playlistname generatePlaylistname(ResultSet resultSet) throws Exception {
 		String name  = resultSet.getString("name");
 		return new Playlistname(name);
+	}
+	
+	private int generateInteger(ResultSet resultSet) throws Exception {
+		int count  = resultSet.getInt("seg_order");
+		return count;
 	}
 }
