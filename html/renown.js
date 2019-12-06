@@ -1,4 +1,5 @@
 var videoNames = [];
+var videoIDs = [];
 var charNames = [];
 var phrases = [];
 var playListNames = [];
@@ -77,7 +78,7 @@ function processListResponse(result) {
     var surl = segmentJson["url"];
     var savailableRemote = segmentJson["availableRemote"];
     var sysvar = segmentJson["system"];
-
+    videoIDs.push(sid);
     videoNames.push(surl);
     charNames.push(scharacter);
     phrases.push(sline);
@@ -185,7 +186,8 @@ function handleDeleteSegmentClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = selectedVideo; 
+    
+    data["name"] = selectedVideo.innerHTML; 
     
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -236,9 +238,12 @@ function addVideos(){
     for(i = 0; i<videoNames.length;i++){
     var name = document.createElement('p');
         name.innerHTML = charNames[i];
+    var id = document.createElement('p');
+        id.innerHTML = videoIDs[i];
     var phrase = document.createElement('p');
         phrase.innerHTML = phrases[i];
     document.getElementById('tb').appendChild(name);
+    document.getElementById('tb').appendChild(id);
     document.getElementById('tb').appendChild(phrase);
     var videoElement = document.createElement('video');
     var source = document.createElement('source');
@@ -287,7 +292,7 @@ function removeFromTimeline(video){
 
 window.onclick = e =>{
     selectedVideo = e.target;
-    console.log(selectedVideo.innerHTML);
+
 }
 
 window.onload = function() {
