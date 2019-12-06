@@ -10,13 +10,14 @@ var previousVideo;
 
 // all access driven through BASE. Must end with a SLASH
 // be sure you change to accommodate your specific API Gateway entry point
-var base_url = "https://5b7elq1ly4.execute-api.us-east-2.amazonaws.com/alpha/"; 
+var base_url = "https://hnmtzz8j71.execute-api.us-east-2.amazonaws.com/Beta/"; 
 
 var list_segments   = base_url + "listsegments";    // GET
 var list_playlists  = base_url + "listplaylists";    // GET
 var create_Playlist = base_url + "createplaylist";    // POST
 var delete_Playlist = base_url + "deleteplaylist";    // POST
 var delete_Segment= base_url + "deletesegment";    // POST
+var append_Segment= base_url + "appendsegment";    // POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -150,6 +151,7 @@ function handleDeletePlaylistClick(e)
     var form = document.createForm;
     var data = {};
     data["name"] = selectedVideo.innerHTML;
+    console.log("InnterHTML: " + selectedVideo.innerHTML);
     
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -212,6 +214,44 @@ function handleDeleteSegmentClick(e)
       processDeleteResponse("N/A");
     }
   };
+}
+
+function handleAppendSegmentClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["name"] = selectedVideo.innerHTML; //This should be wherever playlist name is stored
+    data["seg_id"] = selectedVideo.innerHTML; //This should be wherever video name is stored
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", append_Segment, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processAppendResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processAppendResponse("N/A");
+    }
+  };
+}
+
+function processAppendResponse(result) {
+  // Can grab any DIV or SPAN HTML element and can then manipulate its
+  // contents dynamically via javascript
+  console.log("Appended :" + result);
 }
 
 function removeVideos(){
