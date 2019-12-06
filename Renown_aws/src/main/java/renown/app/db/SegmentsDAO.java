@@ -101,6 +101,26 @@ public class SegmentsDAO {
             throw new Exception("Failed to delete segment: " + e.getMessage());
         }
     }
+	
+	public List<Segment> showPlaylist(String name) throws Exception {
+
+		List<Segment> playlistSegments = new ArrayList<>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists NATURAL JOIN segments WHERE playlists.name = ? ORDER BY playlists.seg_order;");
+            ps.setString(1, name);
+            ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				Segment s = generateSegment(resultSet);
+				playlistSegments.add(s);
+			}
+			resultSet.close();
+			return playlistSegments;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting books: " + e.getMessage());
+		}
+	}
 
 	private Segment generateSegment(ResultSet resultSet) throws Exception {
 		String id  = resultSet.getString("seg_id");
