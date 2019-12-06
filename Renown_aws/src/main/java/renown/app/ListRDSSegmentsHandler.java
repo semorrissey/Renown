@@ -29,6 +29,8 @@ public class ListRDSSegmentsHandler implements RequestHandler<ListSegmentsReques
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler to list all segments");
 
+		SegmentsDAO dao = new SegmentsDAO();
+		
 		Map<String,String> map = System.getenv();
 		for (String k: map.keySet()) {
 			logger.log(k + "=" + map.get(k));
