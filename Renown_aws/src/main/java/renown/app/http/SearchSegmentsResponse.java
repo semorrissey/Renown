@@ -24,6 +24,6 @@ public class SearchSegmentsResponse {
 	
 	public String toString() {
 		if (list == null) { return "EmptySegments"; }
-		return "AllSegments(" + list.size() + ")";
+		return "SearchSegments(" + list.size() + ")";
 	}
 }

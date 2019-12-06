@@ -121,6 +121,63 @@ public class SegmentsDAO {
 			throw new Exception("Failed in getting books: " + e.getMessage());
 		}
 	}
+	
+	public List<Segment> getSearchedSegments(String character, String line) throws Exception {
+
+		List<Segment> searchedSegments = new ArrayList<>();
+		try {
+			// if the search is only by character
+			if (character != "" && line == "") {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE character=?;");
+				ps.setString(1, character);
+				ResultSet resultSet = ps.executeQuery();
+				
+				while (resultSet.next()) {
+					Segment s = generateSegment(resultSet);
+					searchedSegments.add(s);
+				}
+				resultSet.close();
+				return searchedSegments;
+			}
+			
+			// if the search is only by line
+			else if (line != "" && character == "") {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.line LIKE %?%;");
+				ps.setString(1, line);
+				ResultSet resultSet = ps.executeQuery();
+				
+				while (resultSet.next()) {
+					Segment s = generateSegment(resultSet);
+					searchedSegments.add(s);
+				}
+				resultSet.close();
+				return searchedSegments;
+			}
+			
+			// if the search is by character and line
+			else if (character != "" && line != "") {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.character=? AND segments.line LIKE %?%;");
+				ps.setString(1, character);
+				ps.setString(2, line);
+				ResultSet resultSet = ps.executeQuery();
+				
+				while (resultSet.next()) {
+					Segment s = generateSegment(resultSet);
+					searchedSegments.add(s);
+				}
+				resultSet.close();
+				return searchedSegments;
+			}
+			
+			// if there is no search, list will be null;
+			else {
+				return searchedSegments;
+			}
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting books: " + e.getMessage());
+		}
+	}
 
 	private Segment generateSegment(ResultSet resultSet) throws Exception {
 		String id  = resultSet.getString("seg_id");

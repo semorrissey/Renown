@@ -20,15 +20,15 @@ public class SearchSegmentsHandler implements RequestHandler<SearchSegmentsReque
 	 * 
 	 * @throws Exception 
 	 */
-	List<Segment> getSegments() throws Exception {
-		logger.log("in getSegments");
+	List<Segment> searchSegments(String character, String line) throws Exception {
+		logger.log("in searchSegments");
 		SegmentsDAO dao = new SegmentsDAO();
 		
-		return dao.getSearchedSegments();
+		return dao.getSearchedSegments(character, line);
 	}
 	
 	@Override
-	public SearchSegmentsResponse handleRequest(SearchSegmentsRequest input, Context context)  {
+	public SearchSegmentsResponse handleRequest(SearchSegmentsRequest req, Context context)  {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler to search all segments");
 
@@ -38,7 +38,7 @@ public class SearchSegmentsHandler implements RequestHandler<SearchSegmentsReque
 		}
 		SearchSegmentsResponse response;
 		try {
-			List<Segment> list = getSegments();
+			List<Segment> list = searchSegments(req.character, req.line);
 			ArrayList<Segment> segList = new ArrayList<>();
 			for (Segment s : list) {
 					segList.add(s);
@@ -52,27 +52,3 @@ public class SearchSegmentsHandler implements RequestHandler<SearchSegmentsReque
 		return response;
 	}
 }
-
-
-
-
-
-logger = context.getLogger();
-logger.log("Loading Java Lambda handler to delete");
-
-DeleteSegmentResponse response = null;
-logger.log(req.toString());
-
-SegmentsDAO dao = new SegmentsDAO();
-
-try {
-	if (dao.deleteSegment(req.seg_id)) {
-		response = new DeleteSegmentResponse(req.seg_id, 200);
-	} else {
-		response = new DeleteSegmentResponse(req.seg_id, 422, "Unable to delete segment.");
-	}
-} catch (Exception e) {
-	response = new DeleteSegmentResponse(req.seg_id, 403, "Unable to delete segment: " + req.seg_id + "(" + e.getMessage() + ")");
-}
-
-return response;
