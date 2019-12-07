@@ -4,7 +4,6 @@ public class UploadSegmentRequest {
 	public String seg_id;
 	public String character;
 	public String line;
-	public String url;
 	public String base64EncodedValue;
 	public boolean system;
 	
@@ -35,19 +34,17 @@ public class UploadSegmentRequest {
 	public UploadSegmentRequest() {
 	}
 	
-	public UploadSegmentRequest(String seg_id, String character, String line, String url, String encoding) {
+	public UploadSegmentRequest(String seg_id, String character, String line, String encoding) {
 		this.seg_id = seg_id;
 		this.character = character;
 		this.line = line;
-		this.url = url;
 		this.base64EncodedValue = encoding;
 	}
 	
-	public UploadSegmentRequest (String seg_id, String character, String line, String url, String encoding, boolean system) {
+	public UploadSegmentRequest (String seg_id, String character, String line, String encoding, boolean system) {
 		this.seg_id = seg_id;
 		this.character = character;
 		this.line = line;
-		this.url = url;
 		this.base64EncodedValue = encoding;
 		this.system = system;
 	}
