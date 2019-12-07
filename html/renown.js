@@ -4,6 +4,7 @@ var charNames = [];
 var phrases = [];
 var playListNames = [];
 var timelineSegments =[];
+var searchResults=[];
 
 var dataList;
 var selectedVideo;
@@ -289,8 +290,8 @@ function handleSearchSegmentsClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["character"] = form.characterName.value;
-    data["line"] = form.segmentLine.value; 
+    data["character"] = document.getElementById('searchName').value;
+    data["line"] = document.getElementById('searchPhrase').value;
     
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -304,7 +305,7 @@ function handleSearchSegmentsClick(e)
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
-	      processCreateResponse(xhr.responseText);
+	      processSearchResponse(xhr.responseText);
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -312,10 +313,21 @@ function handleSearchSegmentsClick(e)
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+      processSearchResponse("N/A");
     }
   };
 }
+
+function processSearchResponse(result) {
+    videoNames = [];
+    videoIDs = [];
+    charNames = [];
+    phrases = [];
+    removeVideos();
+    processListResponse(result);
+    addVideos();
+}
+
 
 function processAppendResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
@@ -344,6 +356,7 @@ function removePlaylists(){
 function addVideos(){
     currentTab = "library";
     removePlaylists();
+    removeVideos();
     var i ;
     for(i = 0; i<videoNames.length;i++){
     var name = document.createElement('p');

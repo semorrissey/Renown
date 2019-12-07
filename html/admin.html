@@ -31,10 +31,9 @@
         
     <div class = "searchInput">
         
-  <input type="text" placeholder="Search Name">
-        <button type ="submit">Search Name</button>
-        <input type="text" placeholder="Search Phrase ">
-        <button type = "submit">Search Phrase</button>
+  <input type="text" placeholder="Search Name" id="searchName">
+        <input type="text" placeholder="Search Phrase " id="searchPhrase">
+        <button type = "submit" onclick="handleSearchSegmentsClick(this)">Search</button>
         <button type ="text">Mark Selected</button>
         <button type ="text" onclick="handleDeleteSegmentClick(this);">Delete Selected Video</button>
         
