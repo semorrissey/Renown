@@ -18,6 +18,8 @@ var create_Playlist = base_url + "createplaylist";    // POST
 var delete_Playlist = base_url + "deleteplaylist";    // POST
 var delete_Segment= base_url + "deletesegment";    // POST
 var append_Segment= base_url + "appendsegment";    // POST
+var show_Playlist= base_url + "showplaylist";    //POST
+var search_Segments= base_url + "searchsegments";    //POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -244,6 +246,69 @@ function handleAppendSegmentClick(e)
     	 }
     } else {
       processAppendResponse("N/A");
+    }
+  };
+}
+
+function handleShowPlaylistClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["name"] = selectedVideo.innerHTML;//this should be name of playlist
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", show_Playlist, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processCreateResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processCreateResponse("N/A");
+    }
+  };
+}
+
+function handleSearchSegmentsClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["character"] = form.characterName.value;
+    data["line"] = form.segmentLine.value; 
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", search_Segments, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processCreateResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processCreateResponse("N/A");
     }
   };
 }
