@@ -3,10 +3,14 @@ var videoIDs = [];
 var charNames = [];
 var phrases = [];
 var playListNames = [];
+var timelineSegments =[];
 
 var dataList;
 var selectedVideo;
 var previousVideo;
+var livePlaylist;
+var liveSegmentID;
+var currentTab;
 
 // all access driven through BASE. Must end with a SLASH
 // be sure you change to accommodate your specific API Gateway entry point
@@ -220,8 +224,8 @@ function handleAppendSegmentClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = selectedVideo.innerHTML; //This should be wherever playlist name is stored
-    data["seg_id"] = selectedVideo.innerHTML; //This should be wherever video name is stored
+    data["name"] = livePlaylist.innerHTML; //This should be wherever playlist name is stored
+    data["seg_id"] = liveSegmentID; //This should be wherever video name is stored
     
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -273,6 +277,7 @@ function removePlaylists(){
 }
 
 function addVideos(){
+    currentTab = "library";
     removePlaylists();
     var i ;
     for(i = 0; i<videoNames.length;i++){
@@ -287,8 +292,8 @@ function addVideos(){
     document.getElementById('tb').appendChild(phrase);
     var videoElement = document.createElement('video');
     var source = document.createElement('source');
-    source.src = videoNames[i];
-    source.type = "video/ogg";
+    videoElement.src = videoNames[i];
+    videoElement.type = "video/ogg";
     videoElement.controls = true;
         videoElement.width = "153";
         videoElement.height = '180';
@@ -300,6 +305,13 @@ function addVideos(){
     console.log(videoNames);
 }
 
+function addRS(){
+    currentTab = "remote";
+    removePlaylists();
+    removeVideos();
+    
+}
+
 
 function getPlaylistNames(e){
     var nameOfPlaylist = document.getElementById('playlistName').value;
@@ -308,7 +320,8 @@ function getPlaylistNames(e){
     return false;
 }
 
-function showPlaylists(){  
+function showPlaylists(){ 
+    currentTab = "playlist";
     removeVideos();
  var i;
         for(i = 0; i<playListNames.length; i++){
@@ -322,6 +335,17 @@ function showPlaylists(){
 function addToTimeline(){
     var movedObj = selectedVideo.cloneNode(true);
     document.getElementById("videoArea").appendChild(movedObj);
+    var url = movedObj.getAttribute('src');
+    var i;
+    for(i = 0; i<videoNames.length;i++){
+            if(url == videoNames[i]){
+                liveSegmentID = videoIDs[i];
+            }
+                
+    } 
+    console.log(liveSegmentID);
+    console.log(livePlaylist.innerHTML);
+    handleAppendSegmentClick(this);
 }
 
 function removeFromTimeline(video){
@@ -329,10 +353,21 @@ function removeFromTimeline(video){
     document.getElementById("videoArea").removeChild(movedObj);
 }
 
+function clearTimeline(){
+     var myNode = document.getElementById("videoArea");
+  while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+  }
+    timelineSegments = [];
+    refreshSegmentsList();
+}
+
 
 window.onclick = e =>{
     selectedVideo = e.target;
-
+    if(currentTab == "playlist"){
+        livePlaylist = e.target
+    }
 }
 
 window.onload = function() {
