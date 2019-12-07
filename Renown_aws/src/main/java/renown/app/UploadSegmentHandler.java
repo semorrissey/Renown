@@ -103,7 +103,7 @@ public class UploadSegmentHandler implements RequestHandler<UploadSegmentRequest
 				}
 			}
 		} catch (Exception e) {
-			response = new UploadSegmentResponse("Unable to create constant: " + req.seg_id + "(" + e.getMessage() + ")", 400);
+			response = new UploadSegmentResponse("Unable to create segment: " + req.seg_id + "(" + e.getMessage() + ")", 400);
 		}
 
 		return response;

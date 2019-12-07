@@ -128,7 +128,7 @@ public class SegmentsDAO {
 		try {
 			// if the search is only by character
 			if (character != "" && line == "") {
-				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE character=?;");
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.character=?;");
 				ps.setString(1, character);
 				ResultSet resultSet = ps.executeQuery();
 				
@@ -142,8 +142,9 @@ public class SegmentsDAO {
 			
 			// if the search is only by line
 			else if (line != "" && character == "") {
-				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.line LIKE %?%;");
-				ps.setString(1, line);
+				String new_line = "%" + line + "%";
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.line LIKE ?;");
+				ps.setString(1, new_line);
 				ResultSet resultSet = ps.executeQuery();
 				
 				while (resultSet.next()) {
@@ -156,9 +157,10 @@ public class SegmentsDAO {
 			
 			// if the search is by character and line
 			else if (character != "" && line != "") {
-				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.character=? AND segments.line LIKE %?%;");
+				String new_line = "%" + line + "%";
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM segments WHERE segments.character=? AND segments.line LIKE ?;");
 				ps.setString(1, character);
-				ps.setString(2, line);
+				ps.setString(2, new_line);
 				ResultSet resultSet = ps.executeQuery();
 				
 				while (resultSet.next()) {
