@@ -418,9 +418,12 @@ function showPlaylists(){
  var i;
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
-            var x = document.createElement("p");
-            x.onclick = function() {doStuff();};
-            x.innerHTML = playListNames[i];
+            var x = document.createElement("button");
+             x.innerHTML = playListNames[i];
+            x.onclick = function() {
+                livePlaylist = this.innerHTML;
+                doStuff();};
+           
             tabs.appendChild(x);
         }
 } 
@@ -456,6 +459,7 @@ function clearTimeline(){
 }
 function addPlaylistsToTime(){
     console.log(livePlaylist);
+    console.log(playlistURL.length)
     clearTimeline();
     var i;
     for(i = playlistURL.length-1; i>=0; i--){
@@ -480,7 +484,7 @@ function doStuff(){
 window.onclick = e =>{
     selectedVideo = e.target;
     if(currentTab == "playlist"){
-        livePlaylist = e.target;
+        //livePlaylist = e.target;
     }
 }
 
