@@ -21,8 +21,9 @@
         <form name="createForm" method="post">
         <input name="base64Encoding" hidden value=""/>
         </form>
-         <button type = "submit" class="input"> Submit URL</button>
-       <input type="text" placeholder="Add a Remote Site URL..." class="input"  onfocus="this.value = ''"> 
+         <button type = "submit" class="input" onclick="handleUploadSiteClick(this)"> Submit URL</button>
+       <input type="text" placeholder="Add a Remote Site URL..." class="input" id="remoteURL" onfocus="this.value = ''">
+        <input type="text" placeholder="Remote Site Name..." class="input" id="remoteName" onfocus="this.value = ''">
 
     </div>
     

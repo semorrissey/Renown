@@ -30,6 +30,7 @@ var show_Playlist= base_url + "showplaylist";    //POST
 var search_Segments= base_url + "searchsegments";    //POST
 var upload_Segment= base_url + "uploadsegment";    // POST
 var list_sites   = base_url + "listsites";    // GET
+var register_site   = base_url + "registersite";    // POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -68,7 +69,7 @@ function refreshPlaylistsList() {
 }
 
 function refreshSitesList() {
-   var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
    xhr.open("GET", list_sites, true);
    xhr.send();
    
@@ -84,7 +85,6 @@ function refreshSitesList() {
     }
   };
 }
-
 
 /**
  * Respond to server JSON object.
@@ -144,7 +144,10 @@ function processSitesListResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
   var sitesList = document.getElementById('sitesList');
-  
+    
+  siteNames = [];
+  siteUrls = [];
+    
   var output = "";
   for (var i = 0; i < js.list.length; i++) {
     var sitesJson = js.list[i];
@@ -199,6 +202,7 @@ function processCreateResponse(result) {
 
 function handleDeletePlaylistClick(e)
 { 
+
     var form = document.createForm;
     var data = {};
     data["name"] = selectedVideo.innerHTML;
@@ -217,6 +221,7 @@ function handleDeletePlaylistClick(e)
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
 	      processDeleteResponse(xhr.responseText);
+            refreshPlaylistsList();
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -233,6 +238,8 @@ function processDeleteResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("deleted :" + result);
+  refreshSegmentsList();
+ location.reload();
 }
 
 function processSegClick(result){
@@ -430,6 +437,38 @@ function handleUploadSegmentClick(e)
   };
 }
 
+function handleUploadSiteClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["site_name"] = document.getElementById('remoteName').value;
+    data["site_url"] = document.getElementById('remoteURL').value;
+    
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", register_site, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processCreateResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processCreateResponse("N/A");
+    }
+  };
+}
+
 function removeVideos(){
     var myNode = document.getElementById("tb");
   while (myNode.firstChild) {
@@ -480,8 +519,6 @@ function addRS(){
     removePlaylists();
     removeVideos();
     refreshSitesList();
-    console.log(siteNames[0] + " " + siteUrls[0]);
-    console.log(siteNames[1] + " " + siteUrls[1]);
     var i ;
     for(i = 0; i<siteNames.length;i++){
     var name = document.createElement('p');
@@ -494,7 +531,6 @@ function addRS(){
     console.log(siteNames);
 }
 
-
 function getPlaylistNames(e){
     var nameOfPlaylist = document.getElementById('playlistName').value;
     handleCreatePlaylistClick(e,nameOfPlaylist);
@@ -505,6 +541,7 @@ function getPlaylistNames(e){
 function showPlaylists(){ 
     currentTab = "playlist";
     removeVideos();
+   
  var i;
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
