@@ -3,13 +3,14 @@ var videoIDs = [];
 var charNames = [];
 var phrases = [];
 var playListNames = [];
+var playlistURL = [];
 var timelineSegments =[];
 var searchResults=[];
 
 var dataList;
 var selectedVideo;
 var previousVideo;
-var livePlaylist;
+var livePlaylist ="";
 var liveSegmentID;
 var currentTab;
 
@@ -191,6 +192,18 @@ function processDeleteResponse(result) {
   console.log("deleted :" + result);
 }
 
+function processSegClick(result){
+    var js = JSON.parse(result);
+    playlistURL =[];
+  for (var i = 0; i < js.list.length; i++) {
+    var segmentJson = js.list[i];
+    var surl = segmentJson["url"];
+    playlistURL.push(surl);
+      
+}
+
+}
+
 function handleDeleteSegmentClick(e)
 { 
     var form = document.createForm;
@@ -259,8 +272,8 @@ function handleShowPlaylistClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = selectedVideo.innerHTML;//this should be name of playlist
-    
+    data["name"] = livePlaylist.innerHTML;//this should be name of playlist
+
     var js = JSON.stringify(data);
     console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
@@ -273,7 +286,7 @@ function handleShowPlaylistClick(e)
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
-	      processCreateResponse(xhr.responseText);
+	      processSegClick(xhr.responseText);
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -281,7 +294,7 @@ function handleShowPlaylistClick(e)
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+      processSegClick("N/A");
     }
   };
 }
@@ -372,15 +385,13 @@ function addVideos(){
     document.getElementById('tb').appendChild(id);
     document.getElementById('tb').appendChild(phrase);
     var videoElement = document.createElement('video');
-    var source = document.createElement('source');
     videoElement.src = videoNames[i];
     videoElement.type = "video/ogg";
     videoElement.controls = true;
         videoElement.width = "153";
         videoElement.height = '180';
         videoElement.id = "video" + i;
-        videoElement.onclick =""
-    videoElement.append(source);
+        videoElement.onclick ="";
     document.getElementById('tb').appendChild(videoElement);
     }
     console.log(videoNames);
@@ -408,6 +419,7 @@ function showPlaylists(){
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
             var x = document.createElement("p");
+            x.onclick = function() {doStuff();};
             x.innerHTML = playListNames[i];
             tabs.appendChild(x);
         }
@@ -442,12 +454,33 @@ function clearTimeline(){
     timelineSegments = [];
     refreshSegmentsList();
 }
-
+function addPlaylistsToTime(){
+    console.log(livePlaylist);
+    clearTimeline();
+    var i;
+    for(i = playlistURL.length-1; i>=0; i--){
+       var videoElement = document.createElement('video');
+    videoElement.src = playlistURL[i];
+    videoElement.type = "video/ogg";
+    videoElement.controls = true;
+        videoElement.width = "153";
+        videoElement.height = '180';
+        videoElement.id = "video" + i;
+        videoElement.onclick ="";
+        var movedObj = videoElement.cloneNode(true);
+        document.getElementById("videoArea").appendChild(movedObj);
+        timelineSegments.push(videoElement);
+}
+}
+function doStuff(){
+    handleShowPlaylistClick(this); 
+    addPlaylistsToTime();
+}
 
 window.onclick = e =>{
     selectedVideo = e.target;
     if(currentTab == "playlist"){
-        livePlaylist = e.target
+        livePlaylist = e.target;
     }
 }
 
