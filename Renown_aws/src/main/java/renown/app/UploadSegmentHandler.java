@@ -61,17 +61,17 @@ public class UploadSegmentHandler implements RequestHandler<UploadSegmentRequest
 		}
 
 		String bucket = REAL_BUCKET;
-		boolean useTestDB = System.getenv("TESTING") != null;
-		if (useTestDB) {
+		//boolean useTestDB = System.getenv("TESTING") != null;
+		/*if (useTestDB) {
 			bucket = TEST_BUCKET;
-		}
+		}*/
 
 		ByteArrayInputStream bais = new ByteArrayInputStream(contents);
 		ObjectMetadata omd = new ObjectMetadata();
 		omd.setContentLength(contents.length);
 		
 		// makes the object publicly visible
-		PutObjectResult res = s3.putObject(new PutObjectRequest(bucket, seg_id, bais, omd)
+		PutObjectResult res = s3.putObject(new PutObjectRequest("", bucket + seg_id + ".ogg", bais, omd)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		
 		// if we ever get here, then whole thing was stored
@@ -86,21 +86,13 @@ public class UploadSegmentHandler implements RequestHandler<UploadSegmentRequest
 		UploadSegmentResponse response;
 		try {
 			byte[] encoded = java.util.Base64.getDecoder().decode(req.base64EncodedValue);
-			if (req.system) {
-				if (createSystemSegment(req.seg_id, encoded)) {
-					response = new UploadSegmentResponse(req.seg_id);
-				} else {
-					response = new UploadSegmentResponse(req.seg_id, 400);
-				}
-			} else {
-				String contents = new String(encoded);
-				String value = String.valueOf(contents);
+			createSystemSegment(req.seg_id, encoded);
+			String contents = "https://renownsegments.s3.us-east-2.amazonaws.com/" + req.seg_id + ".ogg";
 				
-				if (uploadSegment(req.seg_id, req.character, req.line, value)) {
-					response = new UploadSegmentResponse(req.seg_id);
-				} else {
-					response = new UploadSegmentResponse(req.seg_id, 400);
-				}
+			if (uploadSegment(req.seg_id, req.character, req.line, contents)) {
+				response = new UploadSegmentResponse(req.seg_id);
+			} else {
+				response = new UploadSegmentResponse(req.seg_id, 400);
 			}
 		} catch (Exception e) {
 			response = new UploadSegmentResponse("Unable to create segment: " + req.seg_id + "(" + e.getMessage() + ")", 400);

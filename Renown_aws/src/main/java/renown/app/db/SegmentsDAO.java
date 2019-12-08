@@ -74,7 +74,7 @@ public class SegmentsDAO {
                 return false;
             }
 
-            ps = conn.prepareStatement("INSERT INTO segments (seg_id,character,line,url,availableRemote) values(?,?,?,?,?);");
+            ps = conn.prepareStatement("INSERT INTO segments (seg_id,segments.character,line,url,availableRemote) values(?,?,?,?,?);");
             ps.setString(1, segment.id);
             ps.setString(2, segment.character);
             ps.setString(3, segment.line);
