@@ -6,6 +6,8 @@ var playListNames = [];
 var playlistURL = [];
 var timelineSegments =[];
 var searchResults=[];
+var siteNames = [];
+var siteUrls = [];
 
 var dataList;
 var selectedVideo;
@@ -16,7 +18,7 @@ var currentTab;
 
 // all access driven through BASE. Must end with a SLASH
 // be sure you change to accommodate your specific API Gateway entry point
-var base_url = "https://hnmtzz8j71.execute-api.us-east-2.amazonaws.com/Beta/"; 
+var base_url = "https://3rr4jcxnb3.execute-api.us-east-2.amazonaws.com/Gamma/"; 
 
 var list_segments   = base_url + "listsegments";    // GET
 var list_playlists  = base_url + "listplaylists";    // GET
@@ -27,6 +29,7 @@ var append_Segment= base_url + "appendsegment";    // POST
 var show_Playlist= base_url + "showplaylist";    //POST
 var search_Segments= base_url + "searchsegments";    //POST
 var upload_Segment= base_url + "uploadsegment";    // POST
+var list_sites   = base_url + "listsites";    // GET
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -60,6 +63,24 @@ function refreshPlaylistsList() {
        return processPlaylistListResponse(xhr.responseText);
     } else {
      return processPlaylistListResponse("N/A");
+    }
+  };
+}
+
+function refreshSitesList() {
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", list_sites, true);
+   xhr.send();
+   
+   console.log("sent");
+
+  // This will process results and update HTML as appropriate. 
+  xhr.onloadend = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      console.log ("XHR:" + xhr.responseText);
+       return processSitesListResponse(xhr.responseText);
+    } else {
+     return processSitesListResponse("N/A");
     }
   };
 }
@@ -114,6 +135,27 @@ function processPlaylistListResponse(result) {
     output = output + "<div id=\"play" + pname + "\"><b>" + pname + ":</b> = " + pname + "<br></div>";
       
     playListNames.push(pname);
+  }
+    return output;
+}
+
+function processSitesListResponse(result) {
+  console.log("res:" + result);
+  // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
+  var js = JSON.parse(result);
+  var sitesList = document.getElementById('sitesList');
+  
+  var output = "";
+  for (var i = 0; i < js.list.length; i++) {
+    var sitesJson = js.list[i];
+    console.log(sitesJson);
+    
+    var sname = sitesJson["site_name"];
+    var surl = sitesJson["site_url"];
+    output = output + "<div id=\"play" + sname + "\"><b>" + sname + ":</b> = " + sname + surl + "<br></div>";
+      
+    siteNames.push(sname);
+    siteUrls.push(surl);
   }
     return output;
 }
@@ -434,10 +476,19 @@ function addVideos(){
 }
 
 function addRS(){
-    currentTab = "remote";
+    currentTab = "remotesites";
     removePlaylists();
     removeVideos();
-    
+    var i ;
+    for(i = 0; i<siteNames.length;i++){
+    var name = document.createElement('p');
+        name.innerHTML = siteNames[i];
+    var url = document.createElement('p');
+        id.innerHTML = siteUrls[i];
+    document.getElementById('tb').appendChild(name);
+    document.getElementById('tb').appendChild(url);
+    }
+    console.log(siteNames);
 }
 
 
