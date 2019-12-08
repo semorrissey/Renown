@@ -13,14 +13,38 @@
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
         <a href="#remotesegments" onclick="">Remote Segments</a>
         <a href= "#delete" onclick="handleDeletePlaylistClick(this);">Delete Selected Playlist</a>
-        <button type = "submit" class = "input">Upload Segment</button>
-        <input type="text" placeholder ="Upload Character Name..." class="input" onfocus="this.value = ''">
-        <input type="text" placeholder ="Upload Character Line..." class="input" onfocus="this.value = ''">
-        <input type = 'file' class ="input">
+        <button type = "submit" class = "input" onclick="handleUploadSegmentClick(this)">Upload Segment</button>
+        <input type="text" placeholder ="Upload Segment ID..." class="input" id="uploadID" onfocus="this.value = ''">
+        <input type="text" placeholder ="Upload Character Name..." class="input" id="uploadName" onfocus="this.value = ''">
+        <input type="text" placeholder ="Upload Character Line..." class="input" id="uploadLine" onfocus="this.value = ''">
+        <input type = 'file' id="segmentValue" name ="segmentValue" class ="input">
+        <form name="createForm" method="post">
+        <input name="base64Encoding" hidden value=""/>
+        </form>
          <button type = "submit" class="input"> Submit URL</button>
        <input type="text" placeholder="Add a Remote Site URL..." class="input"  onfocus="this.value = ''"> 
 
     </div>
+    
+     <script>
+    function getBase64(file) {
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+
+	reader.onload = function () {
+	  document.createForm.base64Encoding.value = reader.result;
+	};
+    }
+    
+    function handleFileSelect(evt) {
+    var files = evt.target.files; 
+    	getBase64(files[0]); // request the load (async)
+    }
+  
+  // register
+  document.getElementById('segmentValue').addEventListener('change', handleFileSelect, false);
+</script>
+    
     <div class ="playlistArea">
     <div class = "play">
          <button type="submit" onclick="getPlaylistNames(this)">Create Playlist</button>
