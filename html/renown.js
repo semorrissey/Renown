@@ -326,6 +326,10 @@ function processSearchResponse(result) {
     removeVideos();
     processListResponse(result);
     addVideos();
+    videoNames = [];
+    videoIDs = [];
+    charNames = [];
+    phrases = [];
 }
 
 
@@ -356,7 +360,6 @@ function removePlaylists(){
 function addVideos(){
     currentTab = "library";
     removePlaylists();
-    removeVideos();
     var i ;
     for(i = 0; i<videoNames.length;i++){
     var name = document.createElement('p');
