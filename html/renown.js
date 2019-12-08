@@ -12,7 +12,7 @@ var siteUrls = [];
 var dataList;
 var selectedVideo;
 var previousVideo;
-var livePlaylist ="";
+var livePlaylist;
 var liveSegmentID;
 var currentTab;
 
@@ -251,7 +251,7 @@ function processSegClick(result){
     playlistURL.push(surl);
       
 }
-
+console.log(playlistURL);
 }
 
 function handleDeleteSegmentClick(e)
@@ -290,7 +290,7 @@ function handleAppendSegmentClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = livePlaylist.innerHTML; //This should be wherever playlist name is stored
+    data["name"] = livePlaylist; //This should be wherever playlist name is stored
     data["seg_id"] = liveSegmentID; //This should be wherever video name is stored
     
     var js = JSON.stringify(data);
@@ -322,7 +322,7 @@ function handleShowPlaylistClick(e)
 { 
     var form = document.createForm;
     var data = {};
-    data["name"] = livePlaylist.innerHTML;//this should be name of playlist
+    data["name"] = livePlaylist;//this should be name of playlist
 
     var js = JSON.stringify(data);
     console.log("JS:" + js);
@@ -546,9 +546,9 @@ function showPlaylists(){
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
             var x = document.createElement("button");
+            x.type = "text";
              x.innerHTML = playListNames[i];
             x.onclick = function() {
-                livePlaylist = this.innerHTML;
                 doStuff();};
            
             tabs.appendChild(x);
@@ -567,7 +567,7 @@ function addToTimeline(){
                 
     } 
     console.log(liveSegmentID);
-    console.log(livePlaylist.innerHTML);
+    console.log(livePlaylist);
     handleAppendSegmentClick(this);
 }
 
@@ -581,15 +581,17 @@ function clearTimeline(){
   while (myNode.firstChild) {
     myNode.removeChild(myNode.firstChild);
   }
-    timelineSegments = [];
+    
     refreshSegmentsList();
 }
 function addPlaylistsToTime(){
+     handleShowPlaylistClick(this); 
     console.log(livePlaylist);
-    console.log(playlistURL.length)
-    clearTimeline();
+    console.log(playlistURL.length);
     var i;
+    clearTimeline();
     for(i = playlistURL.length-1; i>=0; i--){
+        console.log("hello");
        var videoElement = document.createElement('video');
     videoElement.src = playlistURL[i];
     videoElement.type = "video/ogg";
@@ -604,16 +606,15 @@ function addPlaylistsToTime(){
 }
 }
 function doStuff(){
-    handleShowPlaylistClick(this); 
     addPlaylistsToTime();
 }
 
-window.onclick = e =>{
+window.addEventListener("click", e => {
     selectedVideo = e.target;
     if(currentTab == "playlist"){
-        //livePlaylist = e.target;
+        livePlaylist = e.target.innerHTML;
     }
-}
+});
 
 window.onload = function() {
     refreshSegmentsList();
