@@ -25,6 +25,7 @@ var delete_Segment= base_url + "deletesegment";    // POST
 var append_Segment= base_url + "appendsegment";    // POST
 var show_Playlist= base_url + "showplaylist";    //POST
 var search_Segments= base_url + "searchsegments";    //POST
+var upload_Segment= base_url + "uploadsegment";    // POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -321,7 +322,7 @@ function handleSearchSegmentsClick(e)
 function processSearchResponse(result) {
     videoNames = [];
     videoIDs = [];
-    charNames = [];
+    charNames = [];         
     phrases = [];
     removeVideos();
     processListResponse(result);
@@ -337,6 +338,41 @@ function processAppendResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("Appended :" + result);
+}
+
+function handleUploadSegmentClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["seg_id"] = document.getElementById('uploadID').value;
+    data["character"] = document.getElementById('uploadName').value;
+    data["line"] = document.getElementById('uploadLine').value;
+    var segments = document.createForm.base64Encoding.value.split(',');
+    data["base64EncodedValue"] = segments[1];
+
+    var js = JSON.stringify(data);
+    console.log("JS:" + js);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", upload_Segment, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    console.log(xhr);
+    console.log(xhr.request);
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      console.log ("XHR:" + xhr.responseText);
+	      processCreateResponse(xhr.responseText);
+    	 } else {
+    		 console.log("actual:" + xhr.responseText)
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processCreateResponse("N/A");
+    }
+  };
 }
 
 function removeVideos(){
