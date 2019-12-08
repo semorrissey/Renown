@@ -72,7 +72,7 @@ function refreshSitesList() {
    xhr.open("GET", list_sites, true);
    xhr.send();
    
-   console.log("sent");
+   console.log("sentSites");
 
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
@@ -479,12 +479,15 @@ function addRS(){
     currentTab = "remotesites";
     removePlaylists();
     removeVideos();
+    refreshSitesList();
+    console.log(siteNames[0] + " " + siteUrls[0]);
+    console.log(siteNames[1] + " " + siteUrls[1]);
     var i ;
     for(i = 0; i<siteNames.length;i++){
     var name = document.createElement('p');
         name.innerHTML = siteNames[i];
     var url = document.createElement('p');
-        id.innerHTML = siteUrls[i];
+        url.innerHTML = siteUrls[i];
     document.getElementById('tb').appendChild(name);
     document.getElementById('tb').appendChild(url);
     }
