@@ -239,7 +239,8 @@ function processDeleteResponse(result) {
   // contents dynamically via javascript
   console.log("deleted :" + result);
   refreshSegmentsList();
- location.reload();
+ refreshPlaylistsList();
+    handleDisplay();
 }
 
 function processSegClick(result){
@@ -386,7 +387,8 @@ function processSearchResponse(result) {
     videoIDs = [];
     charNames = [];         
     phrases = [];
-    removeVideos();
+    resetVideos();
+    clearDisplay();
     processListResponse(result);
     addVideos();
     videoNames = [];
@@ -400,6 +402,9 @@ function processAppendResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("Appended :" + result);
+    refreshPlaylistsList();
+    refreshSegmentsList();
+    handleDisplay();
 }
 
 function handleUploadSegmentClick(e)
@@ -469,27 +474,32 @@ function handleUploadSiteClick(e)
   };
 }
 
-function removeVideos(){
+function clearDisplay(){
     var myNode = document.getElementById("tb");
   while (myNode.firstChild) {
     myNode.removeChild(myNode.firstChild);
   }
+}
+
+function resetVideos(){
     videoNames = [];
     refreshSegmentsList();
 }
 
-function removePlaylists(){
-      var myNode = document.getElementById("tb");
-  while (myNode.firstChild) {
-    myNode.removeChild(myNode.firstChild);
-  }
+function resetPlaylists(){
     playListNames = [];
     refreshPlaylistsList();
 }
 
+function resetRS(){
+    siteNames = [];
+    siteUrls = [];
+    refreshSitesList();
+}
+
 function addVideos(){
     currentTab = "library";
-    removePlaylists();
+    clearDisplay();
     var i ;
     for(i = 0; i<videoNames.length;i++){
     var name = document.createElement('p');
@@ -510,15 +520,14 @@ function addVideos(){
         videoElement.id = "video" + i;
         videoElement.onclick ="";
     document.getElementById('tb').appendChild(videoElement);
+        console.log("I did it!");
     }
     console.log(videoNames);
 }
 
 function addRS(){
+    clearDisplay();
     currentTab = "remotesites";
-    removePlaylists();
-    removeVideos();
-    refreshSitesList();
     var i ;
     for(i = 0; i<siteNames.length;i++){
     var name = document.createElement('p');
@@ -535,13 +544,13 @@ function getPlaylistNames(e){
     var nameOfPlaylist = document.getElementById('playlistName').value;
     handleCreatePlaylistClick(e,nameOfPlaylist);
     playListNames.push(nameOfPlaylist);
+    handleDisplay();
     return false;
 }
 
 function showPlaylists(){ 
     currentTab = "playlist";
-    removeVideos();
-   
+    clearDisplay();
  var i;
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
@@ -549,7 +558,7 @@ function showPlaylists(){
             x.type = "text";
              x.innerHTML = playListNames[i];
             x.onclick = function() {
-                doStuff();};
+                addPlaylistsToTime();};
            
             tabs.appendChild(x);
         }
@@ -605,9 +614,20 @@ function addPlaylistsToTime(){
         timelineSegments.push(videoElement);
 }
 }
-function doStuff(){
-    addPlaylistsToTime();
+
+function handleDisplay(){
+    if(currentTab == "library"){
+        resetVideos();
+        addVideos();
+    }
+    else if(currentTab == "playlist"){
+        resetPlaylists();
+        showPlaylists();
+    }
 }
+
+
+
 
 window.addEventListener("click", e => {
     selectedVideo = e.target;
@@ -619,7 +639,7 @@ window.addEventListener("click", e => {
 window.onload = function() {
     refreshSegmentsList();
     refreshPlaylistsList();
-
+    refreshSitesList();
 }
 
 
