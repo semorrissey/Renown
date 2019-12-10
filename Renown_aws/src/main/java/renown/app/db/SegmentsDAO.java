@@ -102,6 +102,30 @@ public class SegmentsDAO {
         }
     }
 	
+	public boolean markSegment(String seg_id) throws Exception {
+        
+        Segment s = getSegment(seg_id);
+        int newAvailableRemote;
+        if(s.availableRemote) {
+        	newAvailableRemote = 0;
+        }
+        else {
+        	newAvailableRemote = 1;
+        }
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE segments SET availableRemote = ? WHERE seg_id = ?;");
+            ps.setInt(1, newAvailableRemote);
+            ps.setString(2, seg_id);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to mark segment: " + e.getMessage());
+        }
+    }
+	
 	public List<Segment> showPlaylist(String name) throws Exception {
 
 		List<Segment> playlistSegments = new ArrayList<>();
@@ -185,8 +209,8 @@ public class SegmentsDAO {
 		String id  = resultSet.getString("seg_id");
 		String character = resultSet.getString("character");
 		String line  = resultSet.getString("line");
-		String url = resultSet.getString("url");
-		boolean availableRemote  = resultSet.getBoolean("availableRemote");
+		String url = resultSet.getString("url"); 
+		boolean availableRemote  = (boolean) resultSet.getObject("availableRemote");
 		return new Segment(id, character, line, url, availableRemote);
 	}
 }

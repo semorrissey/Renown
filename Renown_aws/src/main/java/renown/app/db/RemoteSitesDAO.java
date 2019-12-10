@@ -85,6 +85,20 @@ public class RemoteSitesDAO {
         }
     }
 	
+	public boolean deleteRemoteSite(String site_url) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM sites WHERE site_url = ?;");
+            ps.setString(1, site_url);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected == 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete remote site: " + e.getMessage());
+        }
+    }
+	
 	private RemoteSite generateRemoteSite(ResultSet resultSet) throws Exception {
 		String site_name  = resultSet.getString("site_name");
 		String site_url = resultSet.getString("site_url");

@@ -16,13 +16,12 @@ public class Segment {
 		this.availableRemote = true;
 	}
 	
-	public Segment (String id, String character, String line, String url, boolean system) {
+	public Segment (String id, String character, String line, String url, boolean availableRemote) {
 		this.id = id;
 		this.character = character;
 		this.line = line;
-		this.availableRemote = true;
+		this.availableRemote = availableRemote;
 		this.url = url;
-		this.system = system;
 	}
 	
 	public boolean getSystem() { 

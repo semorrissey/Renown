@@ -38,13 +38,10 @@ function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
    xhr.open("GET", list_segments, true);
    xhr.send();
-   
-   console.log("sent");
 
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-      console.log ("XHR:" + xhr.responseText);
        return processListResponse(xhr.responseText);
     } else {
      return processListResponse("N/A");
@@ -56,14 +53,11 @@ function refreshPlaylistsList() {
    var xhr = new XMLHttpRequest();
    xhr.open("GET", list_playlists, true);
    xhr.send();
-   
-   console.log("sent");
 
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-      console.log ("XHR:" + xhr.responseText);
-       processPlaylistListResponse(xhr.responseText);
+       return processPlaylistListResponse(xhr.responseText);
     } else {
      processPlaylistListResponse("N/A");
     }
@@ -75,12 +69,9 @@ function refreshSitesList() {
    xhr.open("GET", list_sites, true);
    xhr.send();
    
-   console.log("sentSites");
-
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-      console.log ("XHR:" + xhr.responseText);
        return processSitesListResponse(xhr.responseText);
     } else {
      return processSitesListResponse("N/A");
@@ -94,7 +85,6 @@ function refreshSitesList() {
  * Replace the contents of 'segmentList' with a <br>-separated list of id,character,line,url,availableRemote objects.
  */
 function processListResponse(result) {
-  console.log("res:" + result);
   // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
   var segmentList = document.getElementById('segmentList');
@@ -103,7 +93,6 @@ function processListResponse(result) {
   for (var i = 0; i < js.list.length; i++) {
     var segmentJson = js.list[i];
     output[i] = js.list[i];
-    //console.log(segmentJson);
     
     var sid = segmentJson["id"];
     var scharacter = segmentJson["character"];
@@ -123,16 +112,12 @@ function processListResponse(result) {
 }
 
 function processPlaylistListResponse(result) {
-  console.log("res:" + result);
-  // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
   var segmentList = document.getElementById('segmentList');
   
   var output = "";
   for (var i = 0; i < js.list.length; i++) {
     var segmentJson = js.list[i];
-    console.log(segmentJson);
-    
     var pname = segmentJson["name"];
     output = output + "<div id=\"play" + pname + "\"><b>" + pname + ":</b> = " + pname + "<br></div>";
       
@@ -142,8 +127,6 @@ function processPlaylistListResponse(result) {
 }
 
 function processSitesListResponse(result) {
-  console.log("res:" + result);
-  // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
   var sitesList = document.getElementById('sitesList');
     
@@ -153,7 +136,6 @@ function processSitesListResponse(result) {
   var output = "";
   for (var i = 0; i < js.list.length; i++) {
     var sitesJson = js.list[i];
-    console.log(sitesJson);
     
     var sname = sitesJson["site_name"];
     var surl = sitesJson["site_url"];
@@ -172,20 +154,15 @@ function handleCreatePlaylistClick(e,name)
     data["name"] = name; 
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", create_Playlist, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processCreateResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -209,23 +186,17 @@ function handleDeletePlaylistClick(e)
     var form = document.createForm;
     var data = {};
     data["name"] = selectedVideo.innerHTML;
-    console.log("InnterHTML: " + selectedVideo.innerHTML);
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", delete_Playlist, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processDeleteResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -253,7 +224,6 @@ function processSegClick(result){
     playlistURL.push(surl);
       
 }
-console.log(playlistURL);
 }
 
 function handleDeleteSegmentClick(e)
@@ -265,20 +235,15 @@ function handleDeleteSegmentClick(e)
     data["name"] = selectedVideo.innerHTML; 
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", delete_Segment, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processDeleteResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -287,6 +252,7 @@ function handleDeleteSegmentClick(e)
       processDeleteResponse("N/A");
     }
   };
+  location.reload();
 }
 
 function handleAppendSegmentClick(e)
@@ -297,20 +263,15 @@ function handleAppendSegmentClick(e)
     data["seg_id"] = liveSegmentID; //This should be wherever video name is stored
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", append_Segment, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processAppendResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -328,20 +289,15 @@ function handleShowPlaylistClick(e)
     data["name"] = livePlaylist;//this should be name of playlist
 
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", show_Playlist, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processSegClick(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -360,20 +316,15 @@ function handleSearchSegmentsClick(e)
     data["line"] = document.getElementById('searchPhrase').value;
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", search_Segments, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processSearchResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -417,20 +368,15 @@ function handleUploadSegmentClick(e)
     data["base64EncodedValue"] = segments[1];
 
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", upload_Segment, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processCreateResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -439,6 +385,7 @@ function handleUploadSegmentClick(e)
       processCreateResponse("N/A");
     }
   };
+    location.reload();
 }
 
 function handleUploadSiteClick(e)
@@ -449,20 +396,15 @@ function handleUploadSiteClick(e)
     data["site_url"] = document.getElementById('remoteURL').value;
     
     var js = JSON.stringify(data);
-    console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", register_site, true);
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
 	      processCreateResponse(xhr.responseText);
     	 } else {
-    		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
 			  var err = js["response"];
 			  alert (err);
@@ -471,6 +413,8 @@ function handleUploadSiteClick(e)
       processCreateResponse("N/A");
     }
   };
+    
+    location.reload();
 }
 
 function clearDisplay(){
@@ -522,9 +466,7 @@ function addVideos(){
         videoElement.id = "video" + i;
         videoElement.onclick ="";
     document.getElementById('tb').appendChild(videoElement);
-        console.log("I did it!");
     }
-    console.log(videoNames);
 }
 
 function addRS(){
@@ -539,7 +481,6 @@ function addRS(){
     document.getElementById('tb').appendChild(name);
     document.getElementById('tb').appendChild(url);
     }
-    console.log(siteNames);
 }
 
 function getPlaylistNames(e){
@@ -577,9 +518,7 @@ function addToTimeline(){
                 liveSegmentID = videoIDs[i];
             }
                 
-    } 
-    console.log(liveSegmentID);
-    console.log(livePlaylist);
+    }
     handleAppendSegmentClick(this);
 }
 
@@ -598,12 +537,9 @@ function clearTimeline(){
 }
 function addPlaylistsToTime(){
      handleShowPlaylistClick(this); 
-    console.log(livePlaylist);
-    console.log(playlistURL.length);
     var i;
     clearTimeline();
     for(i = playlistURL.length-1; i>=0; i--){
-        console.log("hello");
        var videoElement = document.createElement('video');
     videoElement.src = playlistURL[i];
     videoElement.type = "video/ogg";
