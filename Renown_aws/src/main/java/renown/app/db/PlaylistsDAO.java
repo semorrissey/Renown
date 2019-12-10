@@ -103,6 +103,11 @@ public class PlaylistsDAO {
         }
     }
 	
+	//change whether remove from end or any position
+	public boolean removeSegment(Playlist playlist) throws Exception {
+        return true;
+    }
+	
     public boolean addPlaylist(Playlistname playlist) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlistnames WHERE name = ?;");
