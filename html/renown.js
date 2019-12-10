@@ -16,6 +16,8 @@ var livePlaylist;
 var liveSegmentID;
 var currentTab;
 
+
+
 // all access driven through BASE. Must end with a SLASH
 // be sure you change to accommodate your specific API Gateway entry point
 var base_url = "https://3rr4jcxnb3.execute-api.us-east-2.amazonaws.com/Gamma/"; 
@@ -61,9 +63,9 @@ function refreshPlaylistsList() {
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       console.log ("XHR:" + xhr.responseText);
-       return processPlaylistListResponse(xhr.responseText);
+       processPlaylistListResponse(xhr.responseText);
     } else {
-     return processPlaylistListResponse("N/A");
+     processPlaylistListResponse("N/A");
     }
   };
 }
@@ -198,6 +200,7 @@ function processCreateResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("result:" + result);
+    handleDisplay();
 }
 
 function handleDeletePlaylistClick(e)
@@ -221,7 +224,6 @@ function handleDeletePlaylistClick(e)
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
 	      processDeleteResponse(xhr.responseText);
-            refreshPlaylistsList();
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -238,9 +240,8 @@ function processDeleteResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("deleted :" + result);
-  refreshSegmentsList();
- refreshPlaylistsList();
-    handleDisplay();
+    //handleDisplay();
+    //console.log(currentTab);
 }
 
 function processSegClick(result){
@@ -260,6 +261,7 @@ function handleDeleteSegmentClick(e)
     var form = document.createForm;
     var data = {};
     
+    console.log(selectedVideo.innerHTML);
     data["name"] = selectedVideo.innerHTML; 
     
     var js = JSON.stringify(data);
@@ -402,9 +404,6 @@ function processAppendResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("Appended :" + result);
-    refreshPlaylistsList();
-    refreshSegmentsList();
-    handleDisplay();
 }
 
 function handleUploadSegmentClick(e)
@@ -483,12 +482,13 @@ function clearDisplay(){
 
 function resetVideos(){
     videoNames = [];
-    refreshSegmentsList();
+  //  refreshSegmentsList();
 }
 
 function resetPlaylists(){
     playListNames = [];
-    refreshPlaylistsList();
+    playlistURL = [];
+ //   refreshPlaylistsList();
 }
 
 function resetRS(){
@@ -496,6 +496,8 @@ function resetRS(){
     siteUrls = [];
     refreshSitesList();
 }
+
+//Issue with global variables, global variabes are being updated but not in the instance the function is called within
 
 function addVideos(){
     currentTab = "library";
@@ -562,6 +564,7 @@ function showPlaylists(){
            
             tabs.appendChild(x);
         }
+    
 } 
 
 function addToTimeline(){
@@ -591,7 +594,7 @@ function clearTimeline(){
     myNode.removeChild(myNode.firstChild);
   }
     
-    refreshSegmentsList();
+//    refreshSegmentsList();
 }
 function addPlaylistsToTime(){
      handleShowPlaylistClick(this); 
@@ -618,10 +621,12 @@ function addPlaylistsToTime(){
 function handleDisplay(){
     if(currentTab == "library"){
         resetVideos();
+        refreshSegmentsList();
         addVideos();
     }
     else if(currentTab == "playlist"){
         resetPlaylists();
+        refreshPlaylistsList();
         showPlaylists();
     }
 }
