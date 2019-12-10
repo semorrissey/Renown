@@ -284,6 +284,7 @@ function handleDeleteSegmentClick(e)
       processDeleteResponse("N/A");
     }
   };
+  location.reload();
 }
 
 function handleAppendSegmentClick(e)
@@ -435,6 +436,7 @@ function handleUploadSegmentClick(e)
       processCreateResponse("N/A");
     }
   };
+    location.reload();
 }
 
 function handleUploadSiteClick(e)
@@ -467,6 +469,8 @@ function handleUploadSiteClick(e)
       processCreateResponse("N/A");
     }
   };
+    
+    location.reload();
 }
 
 function removeVideos(){
