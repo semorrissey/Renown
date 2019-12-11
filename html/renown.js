@@ -549,6 +549,9 @@ function removeFromTimeline(video){
             document.getElementById("timeArea").removeChild(children.item(j));
         }
     }
+     if(document.getElementById("timeArea").childNodes.length == 0){
+        timelineSegments = [];
+    }
         
 }
 
