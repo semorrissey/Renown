@@ -484,9 +484,10 @@ function addRS(){
 }
 
 function getPlaylistNames(e){
-    var nameOfPlaylist = document.getElementById('playlistName').value;
-    handleCreatePlaylistClick(e,nameOfPlaylist);
-    playListNames.push(nameOfPlaylist);
+    var nameOfPlaylist = document.getElementById('playlistName');
+    handleCreatePlaylistClick(e,nameOfPlaylist.value);
+    playListNames.push(nameOfPlaylist.value);
+    nameOfPlaylist.value = "";
     handleDisplay();
     return false;
 }
