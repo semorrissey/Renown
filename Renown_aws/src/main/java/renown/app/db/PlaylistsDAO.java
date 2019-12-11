@@ -84,6 +84,27 @@ public class PlaylistsDAO {
 		}
 	}
 	
+	public List<Playlist> getPlaylists(String name) throws Exception {
+
+		List<Playlist> allPlaylists = new ArrayList<>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists WHERE name = ?;");
+            ps.setString(1, name);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				Playlist p = generatePlaylist(resultSet);
+				allPlaylists.add(p);
+			}
+			resultSet.close();
+			ps.close();
+			return allPlaylists;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting books: " + e.getMessage());
+		}
+	}
+	
 	public boolean deletePlaylist(String name) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE name = ?;");
@@ -103,9 +124,46 @@ public class PlaylistsDAO {
         }
     }
 	
-	//change whether remove from end or any position
+	//remove a segment from a playlist in any position & update other segments in the playlist
 	public boolean removeSegment(Playlist playlist) throws Exception {
-        return true;
+		
+		int order = playlist.seg_order;
+		int max_order = getPlaylistLength(playlist.name) - 1;
+		try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE name = ? AND seg_id = ? AND seg_order = ?;");
+            ps.setString(1, playlist.name);
+            ps.setString(2, playlist.seg_id);
+            ps.setInt(3, playlist.seg_order);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            List<Playlist> list = getPlaylists(playlist.name);
+            int i;
+            if (numAffected == 1) {
+            	for (i=0; i<max_order; i++) {
+            		if(list.get(i).seg_order < order) {
+            			//change nothing
+            			continue;
+            		}
+            		//if its not less than the order, it muse be over, so decrement the seg_order
+            		else {
+            			//new update query
+            			int new_order = list.get(i).seg_order - 1;
+            			PreparedStatement ps1 = conn.prepareStatement("UPDATE playlists SET seg_order = ? WHERE name = ? AND seg_id = ?;");
+            			ps1.setInt(1, new_order);
+            			ps1.setString(2, list.get(i).name);
+            			ps1.setString(3, list.get(i).seg_id);
+            			int numAffected1 = ps1.executeUpdate();
+            			ps1.close();
+            		}
+            	}
+            }
+            
+            return (numAffected == 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to remove segment from playlist: " + e.getMessage());
+        }
     }
 	
     public boolean addPlaylist(Playlistname playlist) throws Exception {
@@ -128,6 +186,27 @@ public class PlaylistsDAO {
 
         } catch (Exception e) {
             throw new Exception("Failed to insert playlist: " + e.getMessage());
+        }
+    }
+    
+    public int getPlaylistLength(String name) throws Exception {
+        try {
+            int numSegments = -1;
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(name) from playlists where playlists.name=?;");
+            ps.setString(1,  name);
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                numSegments = generateInteger2(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+            
+            return numSegments;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting segment order from: " + name + ": " + e.getMessage());
         }
     }
     
@@ -180,6 +259,11 @@ public class PlaylistsDAO {
 	
 	private int generateInteger(ResultSet resultSet) throws Exception {
 		int count  = resultSet.getInt("seg_order");
+		return count;
+	}
+	
+	private int generateInteger2(ResultSet resultSet) throws Exception {
+		int count  = resultSet.getInt("COUNT(name)");
 		return count;
 	}
 }
