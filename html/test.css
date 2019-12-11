@@ -134,7 +134,7 @@ float: right;
     box-sizing: border-box;
     vertical-align: middle;
 }
-#videoArea{
+#timeArea{
     position:static;
     min-width: 100px;
     min-height:  200px;

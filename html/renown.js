@@ -512,7 +512,7 @@ function showPlaylists(){
 function addToTimeline(){
     var movedObj = selectedVideo.cloneNode(true);
    if(movedObj.id.includes('video')){
-    document.getElementById("videoArea").appendChild(movedObj);
+    document.getElementById("timeArea").appendChild(movedObj);
     var url = movedObj.getAttribute('src');
     var i;
     for(i = 0; i<videoNames.length;i++){
@@ -528,7 +528,7 @@ function addToTimeline(){
 
 function removeFromTimeline(video){
     var movedObj = selectedVideo.cloneNode(true);
-    var children = document.getElementById("videoArea").childNodes;
+    var children = document.getElementById("timeArea").childNodes;
     var i;
     for(i = 0; i<videoIDs.length; i++){
         if(movedObj.id == videoIDs[i]){
@@ -542,23 +542,23 @@ function removeFromTimeline(video){
                 timelineSegments.shift(k,1);           
             }
         }
+    
      var j;
     for(j = 0; j<children.length;j++){
         if(movedObj.isEqualNode(children.item(j))){
-            document.getElementById("videoArea").removeChild(children.item(j));
+            document.getElementById("timeArea").removeChild(children.item(j));
         }
     }
         
 }
 
 function clearTimeline(){
-     var myNode = document.getElementById("videoArea");
+     var myNode = document.getElementById("timeArea");
   while (myNode.firstChild) {
     myNode.removeChild(myNode.firstChild);
   }
     timelineSegments = [];
     
-//    refreshSegmentsList();
 }
 function addPlaylistsToTime(id){
     handleShowPlaylistClick(this,id);
@@ -574,7 +574,7 @@ function addPlaylistsToTime(id){
         videoElement.id = "video" + i;
         videoElement.onclick ="";
         var movedObj = videoElement.cloneNode(true);
-        document.getElementById("videoArea").appendChild(movedObj);
+        document.getElementById("timeArea").appendChild(movedObj);
         timelineSegments.push(videoElement);
 }
 }
@@ -598,6 +598,8 @@ function handleDisplay(){
 window.addEventListener("click", e => {
     selectedVideo = e.target;
     console.log(e.target);
+    console.log(timelineSegments.length);
+    console.log(timelineSegments);
     if(currentTab == "playlist"){
         livePlaylist = e.target.innerHTML;
     }
