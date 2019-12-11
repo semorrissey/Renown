@@ -282,11 +282,11 @@ function handleAppendSegmentClick(e)
   };
 }
 
-function handleShowPlaylistClick(e)
-{ 
+function handleShowPlaylistClick(e, id)
+{
     var form = document.createForm;
     var data = {};
-    data["name"] = livePlaylist;//this should be name of playlist
+    data["name"] = id;//this should be name of playlist
 
     var js = JSON.stringify(data);
     var xhr = new XMLHttpRequest();
@@ -502,7 +502,7 @@ function showPlaylists(){
             x.type = "text";
              x.innerHTML = playListNames[i];
             x.onclick = function() {
-                addPlaylistsToTime();};
+                addPlaylistsToTime(this.innerHTML);};
            
             tabs.appendChild(x);
         }
@@ -511,6 +511,7 @@ function showPlaylists(){
 
 function addToTimeline(){
     var movedObj = selectedVideo.cloneNode(true);
+   if(movedObj.id.includes('video')){
     document.getElementById("videoArea").appendChild(movedObj);
     var url = movedObj.getAttribute('src');
     var i;
@@ -520,12 +521,34 @@ function addToTimeline(){
             }
                 
     }
+    timelineSegments.push(movedObj);
     handleAppendSegmentClick(this);
+   }
 }
 
 function removeFromTimeline(video){
     var movedObj = selectedVideo.cloneNode(true);
-    document.getElementById("videoArea").removeChild(movedObj);
+    var children = document.getElementById("videoArea").childNodes;
+    var i;
+    for(i = 0; i<videoIDs.length; i++){
+        if(movedObj.id == videoIDs[i]){
+            videoIDs.shift(i,1);
+            videoNames.shift(i,1);
+        }
+    }
+    var k;
+        for(k=0;k<timelineSegments.length;k++){
+            if(timelineSegments[k].isEqualNode(children.item(k))){
+                timelineSegments.shift(k,1);           
+            }
+        }
+     var j;
+    for(j = 0; j<children.length;j++){
+        if(movedObj.isEqualNode(children.item(j))){
+            document.getElementById("videoArea").removeChild(children.item(j));
+        }
+    }
+        
 }
 
 function clearTimeline(){
@@ -533,11 +556,12 @@ function clearTimeline(){
   while (myNode.firstChild) {
     myNode.removeChild(myNode.firstChild);
   }
+    timelineSegments = [];
     
 //    refreshSegmentsList();
 }
-function addPlaylistsToTime(){
-     handleShowPlaylistClick(this); 
+function addPlaylistsToTime(id){
+    handleShowPlaylistClick(this,id);
     var i;
     clearTimeline();
     for(i = playlistURL.length-1; i>=0; i--){
@@ -573,6 +597,7 @@ function handleDisplay(){
 
 window.addEventListener("click", e => {
     selectedVideo = e.target;
+    console.log(e.target);
     if(currentTab == "playlist"){
         livePlaylist = e.target.innerHTML;
     }
