@@ -13,7 +13,7 @@
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
         <a href="#remotesites" onclick="addRS()">Remote Sites</a>
         <a href= "#delete" onclick="handleDeletePlaylistClick(this);">Delete Selected Playlist</a>
-        <button type = "submit" class = "input" onclick="handleUploadSegmentClick(this)">Upload Segment</button>
+        <a  style = "float:right;"onclick="handleUploadSegmentClick(this)">Upload Segment</a>
         <input type="text" placeholder ="Upload Segment ID..." class="input" id="uploadID" onfocus="this.value = ''">
         <input type="text" placeholder ="Upload Character Name..." class="input" id="uploadName" onfocus="this.value = ''">
         <input type="text" placeholder ="Upload Character Line..." class="input" id="uploadLine" onfocus="this.value = ''">
@@ -21,9 +21,9 @@
         <form name="createForm" method="post">
         <input name="base64Encoding" hidden value=""/>
         </form>
-         <button type = "submit" class="input" onclick="handleUploadSiteClick(this)"> Submit URL</button>
        <input type="text" placeholder="Add a Remote Site URL..." class="input" id="remoteURL" onfocus="this.value = ''">
         <input type="text" placeholder="Remote Site Name..." class="input" id="remoteName" onfocus="this.value = ''">
+         <a style = "float: right;" onclick="handleUploadSiteClick(this)"> Submit URL</a>
 
     </div>
     

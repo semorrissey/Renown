@@ -285,7 +285,7 @@ function handleDeleteSegmentClick(e)
       processDeleteResponse("N/A");
     }
   };
-  location.reload();
+  //location.reload();
 }
 
 function handleAppendSegmentClick(e)
@@ -395,8 +395,11 @@ function handleUploadSegmentClick(e)
     var form = document.createForm;
     var data = {};
     data["seg_id"] = document.getElementById('uploadID').value;
+    document.getElementById('uploadID').value = "";
     data["character"] = document.getElementById('uploadName').value;
+     document.getElementById('uploadName').value = "";
     data["line"] = document.getElementById('uploadLine').value;
+    document.getElementById('uploadLine').value = "";
     var segments = document.createForm.base64Encoding.value.split(',');
     data["base64EncodedValue"] = segments[1];
 
@@ -418,7 +421,7 @@ function handleUploadSegmentClick(e)
       processCreateResponse("N/A");
     }
   };
-    location.reload();
+    //location.reload();
 }
 
 function handleUploadSiteClick(e)
@@ -426,7 +429,9 @@ function handleUploadSiteClick(e)
     var form = document.createForm;
     var data = {};
     data["site_name"] = document.getElementById('remoteName').value;
+    document.getElementById('remoteName').value = "";
     data["site_url"] = document.getElementById('remoteURL').value;
+    document.getElementById('remoteURL').value = "";
     
     var js = JSON.stringify(data);
     var xhr = new XMLHttpRequest();
@@ -447,7 +452,7 @@ function handleUploadSiteClick(e)
     }
   };
     
-    location.reload();
+   // location.reload();
 }
 
 function clearDisplay(){
@@ -533,6 +538,7 @@ function showPlaylists(){
             var tabs = document.getElementById('tb');
             var x = document.createElement("button");
             x.type = "text";
+            x.id ="pButton";
              x.innerHTML = playListNames[i];
             x.onclick = function() {
                 addPlaylistsToTime(this.innerHTML);};

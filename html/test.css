@@ -148,3 +148,11 @@ float: right;
     background-color: coral;
     display:inline-block;
 }
+#timeArea video:active, video:hover{
+    background-color: dodgerblue;
+    
+}
+
+#pButton:hover, #pButton:active{
+    background-color: darkgrey;
+}
