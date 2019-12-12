@@ -89,6 +89,7 @@ function processListResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
   var js = JSON.parse(result);
   var segmentList = document.getElementById('segmentList');
+  resetVideos();
   
   var output = [js.list.length];
   for (var i = 0; i < js.list.length; i++) {
@@ -115,7 +116,8 @@ function processListResponse(result) {
 function processPlaylistListResponse(result) {
   var js = JSON.parse(result);
   var segmentList = document.getElementById('segmentList');
-  
+  resetPlaylists();
+    
   var output = "";
   for (var i = 0; i < js.list.length; i++) {
     var segmentJson = js.list[i];
@@ -192,6 +194,8 @@ function handleDeletePlaylistClick(e)
     var xhr = new XMLHttpRequest();
     xhr.open("POST", delete_Playlist, true);
     xhr.send(js);
+    
+    clearTimeline();
     
     xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -464,6 +468,9 @@ function clearDisplay(){
 
 function resetVideos(){
     videoNames = [];
+    videoIDs = [];
+    charNames = [];
+    phrases = [];
   //  refreshSegmentsList();
 }
 
@@ -484,6 +491,7 @@ function resetRS(){
 function addVideos(){
     currentTab = "library";
     clearDisplay();
+    refreshSegmentsList();
     var i ;
     for(i = 0; i<videoNames.length;i++){
     var name = document.createElement('p');
@@ -533,6 +541,7 @@ function getPlaylistNames(e){
 function showPlaylists(){ 
     currentTab = "playlist";
     clearDisplay();
+    refreshPlaylistsList();
  var i;
         for(i = 0; i<playListNames.length; i++){
             var tabs = document.getElementById('tb');
