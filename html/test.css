@@ -38,6 +38,11 @@ html, body{
   color: white;
 }
 
+.topnav button.active{
+   background-color: #2196F3;
+  color: white; 
+}
+
 /* Style the search box inside the navigation bar */
 .topnav input[type=text] {
   float: right;

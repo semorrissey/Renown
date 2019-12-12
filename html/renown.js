@@ -33,6 +33,7 @@ var search_Segments= base_url + "searchsegments";    //POST
 var upload_Segment= base_url + "uploadsegment";    // POST
 var list_sites   = base_url + "listsites";    // GET
 var register_site   = base_url + "registersite";    // POST
+var remove_segment = base_url + "removesegment"; //POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -211,8 +212,7 @@ function processDeleteResponse(result) {
   // Can grab any DIV or SPAN HTML element and can then manipulate its
   // contents dynamically via javascript
   console.log("deleted :" + result);
-    //handleDisplay();
-    //console.log(currentTab);
+    //location.reload();
 }
 
 function processSegClick(result){
@@ -224,6 +224,39 @@ function processSegClick(result){
     playlistURL.push(surl);
       
 }
+}
+
+function handleRemoveSegmentClick(e, name, id, order)
+{ 
+    var form = document.createForm;
+    var data = {};
+    
+    console.log("name: " + name);
+    console.log("id: " + id);
+    console.log("order: " + order);
+    
+    data["name"] = name; 
+    data["seg_id"] = id;
+    data["seg_order"] = order;
+    
+    var js = JSON.stringify(data);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", remove_segment, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      processDeleteResponse(xhr.responseText);
+    	 } else {
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processDeleteResponse("N/A");
+    }
+  };
 }
 
 function handleDeleteSegmentClick(e)
@@ -529,17 +562,29 @@ function addToTimeline(){
 function removeFromTimeline(video){
     var movedObj = selectedVideo.cloneNode(true);
     var children = document.getElementById("timeArea").childNodes;
+    var videoId;
+    var nameIndex;
+    var segID;
+    
+    var l ;
+    for(l = 0; l<videoNames.length; l++){
+        if(movedObj.src == videoNames[l]){
+            nameIndex = l;
+        }
+    }
+    
     var i;
     for(i = 0; i<videoIDs.length; i++){
-        if(movedObj.id == videoIDs[i]){
-            videoIDs.shift(i,1);
-            videoNames.shift(i,1);
+        if(videoIDs[nameIndex] ==  videoIDs[i]){
+            videoId = videoIDs[i];
         }
     }
     var k;
         for(k=0;k<timelineSegments.length;k++){
-            if(timelineSegments[k].isEqualNode(children.item(k))){
-                timelineSegments.shift(k,1);           
+            if(movedObj.isEqualNode(timelineSegments[k])){
+                timelineSegments.splice(k,1);
+                segID = k + 1;
+                console.log(segID);
             }
         }
     
@@ -552,6 +597,7 @@ function removeFromTimeline(video){
      if(document.getElementById("timeArea").childNodes.length == 0){
         timelineSegments = [];
     }
+     handleRemoveSegmentClick(this,livePlaylist,videoId,segID);
         
 }
 
@@ -564,10 +610,11 @@ function clearTimeline(){
     
 }
 function addPlaylistsToTime(id){
+    livePlaylist = id;
     handleShowPlaylistClick(this,id);
     var i;
     clearTimeline();
-    for(i = playlistURL.length-1; i>=0; i--){
+    for(i = 0; i<playlistURL.length; i++){
        var videoElement = document.createElement('video');
     videoElement.src = playlistURL[i];
     videoElement.type = "video/ogg";
@@ -603,9 +650,6 @@ window.addEventListener("click", e => {
     console.log(e.target);
     console.log(timelineSegments.length);
     console.log(timelineSegments);
-    if(currentTab == "playlist"){
-        livePlaylist = e.target.innerHTML;
-    }
 });
 
 window.onload = function() {
