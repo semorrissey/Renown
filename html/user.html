@@ -11,7 +11,6 @@
     <div class ="topnav">
         <a href ="#segments" onclick = "addVideos()">Library</a>
         <a href = "#playlist" onclick="showPlaylists()">Playlist</a>
-        <a href="#remotesites" onclick="addRS()">Remote Sites</a>
         <a href= "#delete" onclick="handleDeletePlaylistClick(this);">Delete Selected Playlist</a>
         <button type = "submit" class = "input" onclick="handleUploadSegmentClick(this)">Upload Segment</button>
         <input type="text" placeholder ="Upload Segment ID..." class="input" id="uploadID" onfocus="this.value = ''">
@@ -55,7 +54,6 @@
   <input type="text" placeholder="Search Name" id="searchName">
         <input type="text" placeholder="Search Phrase " id="searchPhrase">
         <button type = "submit" onclick="handleSearchSegmentsClick(this)">Search</button>
-        <button type ="text">Mark Selected</button>
         <button type ="text" onclick="handleDeleteSegmentClick(this);">Delete Selected Video</button>
         
 </div>
@@ -69,7 +67,7 @@
         <div id="timelineArea" class="timelineArea">
         <p>Timeline</p>
             <button onclick="removeFromTimeline()">Remove Video</button>
-            <div id="videoArea"  onclick="addToTimeline()">
+            <div id="timeArea"  onclick="addToTimeline()">
             
             </div>
     </div>
