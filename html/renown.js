@@ -558,9 +558,10 @@ function showPlaylists(){
 } 
 
 function addToTimeline(){
-    var movedObj = selectedVideo.cloneNode(true);
-   if(movedObj.id.includes('video')){
-    document.getElementById("timeArea").appendChild(movedObj);
+    var movedObj = selectedVideo.cloneNode(false);
+    var id = movedObj.id;
+   if(id.includes("video")){
+    movedObj.setAttribute("id","inTimeLine");
     var url = movedObj.getAttribute('src');
     var i;
     for(i = 0; i<videoNames.length;i++){
@@ -570,8 +571,12 @@ function addToTimeline(){
                 
     }
     timelineSegments.push(movedObj);
+    console.log(timelineSegments[timelineSegments.length-1]);
+    document.getElementById("timeArea").appendChild(timelineSegments[timelineSegments.length-1]);
     handleAppendSegmentClick(this);
    }
+    
+   
 }
 
 function removeFromTimeline(video){
@@ -636,7 +641,7 @@ function addPlaylistsToTime(id){
     videoElement.controls = true;
         videoElement.width = "153";
         videoElement.height = '180';
-        videoElement.id = "video" + i;
+        videoElement.id = "inTimeline";
         videoElement.onclick ="";
         var movedObj = videoElement.cloneNode(true);
         document.getElementById("timeArea").appendChild(movedObj);
