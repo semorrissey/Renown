@@ -32,6 +32,7 @@ public class CreatePlaylistTest extends LambdaTest{
     	
     	CreatePlaylistResponse decres = new CreatePlaylistResponse ("error", 400); 
     	CreatePlaylistResponse resp = handler.handleRequest(req, createContext("createPlaylist"));
+    	CreatePlaylistResponse response = handler.handleRequest(req, createContext("createPlaylist"));
         resp.toString();
     	Assert.assertEquals(resp.httpCode, 200);
         
