@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UploadSegmentHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">renown.app</a> &gt; <span class="el_source">UploadSegmentHandler.java</span></div><h1>UploadSegmentHandler.java</h1><pre class="source lang-java linenums">package renown.app;
+
+import java.io.ByteArrayInputStream;
+
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
+
+import renown.app.http.*;
+import renown.app.model.Segment;
+import renown.app.db.SegmentsDAO;
+
+<span class="fc" id="L20">public class UploadSegmentHandler implements RequestHandler&lt;UploadSegmentRequest,UploadSegmentResponse&gt; {</span>
+
+	LambdaLogger logger;
+	
+	// To access S3 storage
+<span class="fc" id="L25">	private AmazonS3 s3 = null;</span>
+		
+	// Note: this works, but it would be better to move this to environment/configuration mechanisms
+	// which you don't have to do for this project.
+	public static final String REAL_BUCKET = &quot;renownsegments/&quot;;
+	public static final String TEST_BUCKET = &quot;testsegments/&quot;;
+	
+	/** Store into RDS.
+	 * 
+	 * @throws Exception 
+	 */
+	public boolean uploadSegment(String seg_id, String character, String line, String url) throws Exception { 
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		if (logger != null) { logger.log(&quot;in uploadSegment&quot;); }</span>
+<span class="nc" id="L38">		SegmentsDAO dao = new SegmentsDAO();</span>
+		
+		// check if present
+<span class="nc" id="L41">		Segment exist = dao.getSegment(seg_id);</span>
+<span class="nc" id="L42">		Segment segment = new Segment(seg_id, character, line, url);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (exist == null) {</span>
+<span class="nc" id="L44">			return dao.addSegment(segment);</span>
+		} else {
+<span class="nc" id="L46">			return false;</span>
+		}
+	}
+	
+	/** Create S3 bucket
+	 * 
+	 * @throws Exception 
+	 */
+	public boolean createSystemSegment(String seg_id, byte[] contents) throws Exception {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (logger != null) { logger.log(&quot;in createSystemSegment&quot;); }</span>
+		
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (s3 == null) {</span>
+<span class="nc" id="L58">			logger.log(&quot;attach to S3 request&quot;);</span>
+<span class="nc" id="L59">			s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_2).build();</span>
+<span class="nc" id="L60">			logger.log(&quot;attach to S3 succeed&quot;);</span>
+		}
+
+<span class="nc" id="L63">		String bucket = REAL_BUCKET;</span>
+		//boolean useTestDB = System.getenv(&quot;TESTING&quot;) != null;
+		/*if (useTestDB) {
+			bucket = TEST_BUCKET;
+		}*/
+
+<span class="nc" id="L69">		ByteArrayInputStream bais = new ByteArrayInputStream(contents);</span>
+<span class="nc" id="L70">		ObjectMetadata omd = new ObjectMetadata();</span>
+<span class="nc" id="L71">		omd.setContentLength(contents.length);</span>
+		
+		// makes the object publicly visible
+<span class="nc" id="L74">		PutObjectResult res = s3.putObject(new PutObjectRequest(&quot;&quot;, bucket + seg_id + &quot;.ogg&quot;, bais, omd)</span>
+<span class="nc" id="L75">				.withCannedAcl(CannedAccessControlList.PublicRead));</span>
+		
+		// if we ever get here, then whole thing was stored
+<span class="nc" id="L78">		return true;</span>
+	}
+	
+	@Override 
+	public UploadSegmentResponse handleRequest(UploadSegmentRequest req, Context context)  {
+<span class="nc" id="L83">		logger = context.getLogger();</span>
+<span class="nc" id="L84">		logger.log(req.toString());</span>
+
+		UploadSegmentResponse response;
+		try {
+<span class="nc" id="L88">			byte[] encoded = java.util.Base64.getDecoder().decode(req.base64EncodedValue);</span>
+<span class="nc" id="L89">			createSystemSegment(req.seg_id, encoded);</span>
+<span class="nc" id="L90">			String contents = &quot;https://renownsegments.s3.us-east-2.amazonaws.com/&quot; + req.seg_id + &quot;.ogg&quot;;</span>
+				
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (uploadSegment(req.seg_id, req.character, req.line, contents)) {</span>
+<span class="nc" id="L93">				response = new UploadSegmentResponse(req.seg_id);</span>
+<span class="nc" id="L94">			} else {</span>
+<span class="nc" id="L95">				response = new UploadSegmentResponse(req.seg_id, 400);</span>
+			}
+<span class="nc" id="L97">		} catch (Exception e) {</span>
+<span class="nc" id="L98">			response = new UploadSegmentResponse(&quot;Unable to create segment: &quot; + req.seg_id + &quot;(&quot; + e.getMessage() + &quot;)&quot;, 400);</span>
+		}
+
+<span class="nc" id="L101">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

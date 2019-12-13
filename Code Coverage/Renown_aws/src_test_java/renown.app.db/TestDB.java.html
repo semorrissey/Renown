@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestDB.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">renown.app.db</a> &gt; <span class="el_source">TestDB.java</span></div><h1>TestDB.java</h1><pre class="source lang-java linenums">package renown.app.db;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+//import java.util.UUID;
+
+import org.junit.Test;
+
+import renown.app.model.Segment;
+import renown.app.model.Playlist;
+import renown.app.model.Playlistname;
+
+<span class="fc" id="L14">public class TestDB {</span>
+
+	@Test
+	public void testAllSegments() {
+<span class="fc" id="L18">	    SegmentsDAO sd = new SegmentsDAO();</span>
+	    try {
+<span class="fc" id="L20">	    	List&lt;Segment&gt; list = sd.getAllSegments();</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">			for (Segment s : list) {</span>
+<span class="fc" id="L22">				System.out.println(&quot;segment &quot; + s.id);</span>
+			}
+<span class="pc" id="L24">	    } catch (Exception e) {</span>
+<span class="nc" id="L25">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L27">	}</span>
+	
+	@Test
+	public void testAllPlaylists() {
+<span class="fc" id="L31">	    PlaylistsDAO sd = new PlaylistsDAO();</span>
+	    try {
+<span class="fc" id="L33">	    	List&lt;Playlistname&gt; list = sd.getAllPlaylistnames();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">			for (Playlistname p : list) {</span>
+<span class="fc" id="L35">				System.out.println(&quot;playlist &quot; + p.name);</span>
+			}
+<span class="pc" id="L37">	    } catch (Exception e) {</span>
+<span class="nc" id="L38">	    	fail (&quot;didn't work:&quot; + e.getMessage());</span>
+	    }
+<span class="fc" id="L40">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

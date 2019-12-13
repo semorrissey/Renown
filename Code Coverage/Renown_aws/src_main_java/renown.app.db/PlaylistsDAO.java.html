@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PlaylistsDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">renown.app.db</a> &gt; <span class="el_source">PlaylistsDAO.java</span></div><h1>PlaylistsDAO.java</h1><pre class="source lang-java linenums">package renown.app.db;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import renown.app.model.*;
+
+public class PlaylistsDAO {
+	
+	java.sql.Connection conn;
+
+<span class="fc" id="L15">	public PlaylistsDAO() {</span>
+		try  {
+<span class="fc" id="L17">			conn = DatabaseUtil.connect();</span>
+<span class="pc" id="L18">		} catch (Exception e) {</span>
+<span class="nc" id="L19">			conn = null;</span>
+		}
+<span class="fc" id="L21">	}</span>
+	
+	public Playlistname getPlaylistname(String name) throws Exception {
+        
+        try {
+<span class="fc" id="L26">            Playlistname playlistname = null;</span>
+<span class="fc" id="L27">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM playlistnames WHERE name=?;&quot;);</span>
+<span class="fc" id="L28">            ps.setString(1,  name);</span>
+<span class="fc" id="L29">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L32">                playlistname = generatePlaylistname(resultSet);</span>
+            }
+<span class="fc" id="L34">            resultSet.close();</span>
+<span class="fc" id="L35">            ps.close();</span>
+            
+<span class="fc" id="L37">            return playlistname;</span>
+
+<span class="nc" id="L39">        } catch (Exception e) {</span>
+<span class="nc" id="L40">        	e.printStackTrace();</span>
+<span class="nc" id="L41">            throw new Exception(&quot;Failed in getting playlistname: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	public List&lt;Playlistname&gt; getAllPlaylistnames() throws Exception {
+
+<span class="fc" id="L47">		List&lt;Playlistname&gt; allPlaylistnames = new ArrayList&lt;&gt;();</span>
+		try {
+<span class="fc" id="L49">			Statement statement = conn.createStatement();</span>
+<span class="fc" id="L50">			String query = &quot;SELECT * FROM playlistnames&quot;;</span>
+<span class="fc" id="L51">			ResultSet resultSet = statement.executeQuery(query);</span>
+
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			while (resultSet.next()) {</span>
+<span class="fc" id="L54">				Playlistname p = generatePlaylistname(resultSet);</span>
+<span class="fc" id="L55">				allPlaylistnames.add(p);</span>
+			}
+<span class="fc" id="L57">			resultSet.close();</span>
+<span class="fc" id="L58">			statement.close();</span>
+<span class="fc" id="L59">			return allPlaylistnames;</span>
+
+<span class="nc" id="L61">		} catch (Exception e) {</span>
+<span class="nc" id="L62">			throw new Exception(&quot;Failed in getting books: &quot; + e.getMessage());</span>
+		}
+	}
+	
+	public List&lt;Playlist&gt; getAllPlaylists() throws Exception {
+
+<span class="fc" id="L68">		List&lt;Playlist&gt; allPlaylists = new ArrayList&lt;&gt;();</span>
+		try {
+<span class="fc" id="L70">			Statement statement = conn.createStatement();</span>
+<span class="fc" id="L71">			String query = &quot;SELECT * FROM playlists&quot;;</span>
+<span class="fc" id="L72">			ResultSet resultSet = statement.executeQuery(query);</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			while (resultSet.next()) {</span>
+<span class="fc" id="L75">				Playlist p = generatePlaylist(resultSet);</span>
+<span class="fc" id="L76">				allPlaylists.add(p);</span>
+			}
+<span class="fc" id="L78">			resultSet.close();</span>
+<span class="fc" id="L79">			statement.close();</span>
+<span class="fc" id="L80">			return allPlaylists;</span>
+
+<span class="nc" id="L82">		} catch (Exception e) {</span>
+<span class="nc" id="L83">			throw new Exception(&quot;Failed in getting books: &quot; + e.getMessage());</span>
+		}
+	}
+	
+	public List&lt;Playlist&gt; getPlaylists(String name) throws Exception {
+
+<span class="fc" id="L89">		List&lt;Playlist&gt; allPlaylists = new ArrayList&lt;&gt;();</span>
+		try {
+<span class="fc" id="L91">			PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM playlists WHERE name = ?;&quot;);</span>
+<span class="fc" id="L92">            ps.setString(1, name);</span>
+<span class="fc" id="L93">			ResultSet resultSet = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			while (resultSet.next()) {</span>
+<span class="fc" id="L96">				Playlist p = generatePlaylist(resultSet);</span>
+<span class="fc" id="L97">				allPlaylists.add(p);</span>
+			}
+<span class="fc" id="L99">			resultSet.close();</span>
+<span class="fc" id="L100">			ps.close();</span>
+<span class="fc" id="L101">			return allPlaylists;</span>
+
+<span class="nc" id="L103">		} catch (Exception e) {</span>
+<span class="nc" id="L104">			throw new Exception(&quot;Failed in getting books: &quot; + e.getMessage());</span>
+		}
+	}
+	
+	public boolean deletePlaylist(String name) throws Exception {
+        try {
+<span class="fc" id="L110">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM playlists WHERE name = ?;&quot;);</span>
+<span class="fc" id="L111">            ps.setString(1, name);</span>
+<span class="fc" id="L112">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L113">            ps.close();</span>
+            
+<span class="fc" id="L115">            PreparedStatement ps1 = conn.prepareStatement(&quot;DELETE FROM playlistnames WHERE name = ?;&quot;);</span>
+<span class="fc" id="L116">            ps1.setString(1, name);</span>
+<span class="fc" id="L117">            int numAffected1 = ps1.executeUpdate();</span>
+<span class="fc" id="L118">            ps1.close();</span>
+            
+<span class="pc bpc" id="L120" title="3 of 4 branches missed.">            return (numAffected == 1 &amp;&amp; numAffected1 == 1);</span>
+
+<span class="nc" id="L122">        } catch (Exception e) {</span>
+<span class="nc" id="L123">            throw new Exception(&quot;Failed to delete playlist: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	//remove a segment from a playlist in any position &amp; update other segments in the playlist
+	public boolean removeSegment(Playlist playlist) throws Exception {
+		
+<span class="fc" id="L130">		int order = playlist.seg_order;</span>
+<span class="fc" id="L131">		int max_order = getPlaylistLength(playlist.name) - 1;</span>
+<span class="fc" id="L132">		List&lt;Playlist&gt; list = getPlaylists(playlist.name);</span>
+		
+<span class="fc" id="L134">		ArrayList&lt;Playlist&gt; new_list = new ArrayList&lt;Playlist&gt;();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for(Playlist p : list) {</span>
+<span class="fc" id="L136">			new_list.add(p);</span>
+		}
+<span class="fc" id="L138">		new_list.remove(order-1);</span>
+		try {
+<span class="fc" id="L140">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM playlists WHERE name = ? AND seg_id = ? AND seg_order = ?;&quot;);</span>
+<span class="fc" id="L141">            ps.setString(1, playlist.name);</span>
+<span class="fc" id="L142">            ps.setString(2, playlist.seg_id);</span>
+<span class="fc" id="L143">            ps.setInt(3, playlist.seg_order);</span>
+<span class="fc" id="L144">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L145">            ps.close();</span>
+            
+            int i;
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">            if (numAffected == 1) {</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">            	for (i=0; i&lt;max_order; i++) {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            		if(new_list.get(i).seg_order &lt; order) {</span>
+            			//change nothing
+<span class="nc" id="L152">            			continue;</span>
+            		}
+            		//if its not less than the order, it muse be over, so decrement the seg_order
+            		else {
+            			//new update query
+<span class="nc" id="L157">            			int new_order = new_list.get(i).seg_order - 1;</span>
+<span class="nc" id="L158">            			PreparedStatement ps1 = conn.prepareStatement(&quot;UPDATE playlists SET seg_order = ? WHERE name = ? AND seg_id = ?;&quot;);</span>
+<span class="nc" id="L159">            			ps1.setInt(1, new_order);</span>
+<span class="nc" id="L160">            			String new_name = new_list.get(i).name;</span>
+<span class="nc" id="L161">            			ps1.setString(2, new_name);</span>
+<span class="nc" id="L162">            			String new_seg_id = new_list.get(i).seg_id;</span>
+<span class="nc" id="L163">            			ps1.setString(3, new_seg_id);</span>
+<span class="nc" id="L164">            			int numAffected1 = ps1.executeUpdate();</span>
+<span class="nc" id="L165">            			ps1.close();</span>
+            		}
+            	}
+            }
+            
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">            return (numAffected == 1);</span>
+
+<span class="nc" id="L172">        } catch (Exception e) {</span>
+<span class="nc" id="L173">            throw new Exception(&quot;Failed to remove segment from playlist: &quot; + e.getMessage());</span>
+        }
+    }
+
+	
+    public boolean addPlaylist(Playlistname playlist) throws Exception {
+        try {
+<span class="fc" id="L180">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM playlistnames WHERE name = ?;&quot;);</span>
+<span class="fc" id="L181">            ps.setString(1, playlist.name);</span>
+<span class="fc" id="L182">            ResultSet resultSet = ps.executeQuery();</span>
+            
+            // already present?
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L186">                Playlistname p = generatePlaylistname(resultSet);</span>
+<span class="nc" id="L187">                resultSet.close();</span>
+<span class="nc" id="L188">                return false;</span>
+            }
+
+<span class="fc" id="L191">            ps = conn.prepareStatement(&quot;INSERT INTO playlistnames (name) values(?);&quot;);</span>
+<span class="fc" id="L192">            ps.setString(1,  playlist.name);</span>
+<span class="fc" id="L193">            ps.execute();</span>
+<span class="fc" id="L194">            return true;</span>
+
+<span class="nc" id="L196">        } catch (Exception e) {</span>
+<span class="nc" id="L197">            throw new Exception(&quot;Failed to insert playlist: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public int getPlaylistLength(String name) throws Exception {
+        try {
+<span class="fc" id="L203">            int numSegments = -1;</span>
+<span class="fc" id="L204">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT COUNT(name) from playlists where playlists.name=?;&quot;);</span>
+<span class="fc" id="L205">            ps.setString(1,  name);</span>
+<span class="fc" id="L206">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L209">                numSegments = generateInteger2(resultSet);</span>
+            }
+<span class="fc" id="L211">            resultSet.close();</span>
+<span class="fc" id="L212">            ps.close();</span>
+            
+<span class="fc" id="L214">            return numSegments;</span>
+
+<span class="nc" id="L216">        } catch (Exception e) {</span>
+<span class="nc" id="L217">        	e.printStackTrace();</span>
+<span class="nc" id="L218">            throw new Exception(&quot;Failed in getting segment order from: &quot; + name + &quot;: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public int getNumSegments(String name) throws Exception {
+        try {
+<span class="fc" id="L224">            int numSegments = -1;</span>
+<span class="fc" id="L225">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT MAX(seg_order) AS seg_order FROM playlists WHERE playlists.name=?;&quot;);</span>
+<span class="fc" id="L226">            ps.setString(1,  name);</span>
+<span class="fc" id="L227">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="fc bfc" id="L229" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L230">                numSegments = generateInteger(resultSet) + 1;</span>
+            }
+<span class="fc" id="L232">            resultSet.close();</span>
+<span class="fc" id="L233">            ps.close();</span>
+            
+<span class="fc" id="L235">            return numSegments;</span>
+
+<span class="nc" id="L237">        } catch (Exception e) {</span>
+<span class="nc" id="L238">        	e.printStackTrace();</span>
+<span class="nc" id="L239">            throw new Exception(&quot;Failed in getting segment order from: &quot; + name + &quot;: &quot; + e.getMessage());</span>
+        }
+    }
+    
+    public boolean appendSegment(Playlist playlist) throws Exception {
+        try {
+<span class="fc" id="L245">            PreparedStatement ps = conn.prepareStatement(&quot;INSERT INTO playlists (name,seg_id,seg_order) values(?,?,?);&quot;);</span>
+<span class="fc" id="L246">            ps.setString(1,  playlist.name);</span>
+<span class="fc" id="L247">            ps.setString(2,  playlist.seg_id);</span>
+<span class="fc" id="L248">            ps.setInt(3,  playlist.seg_order);</span>
+<span class="fc" id="L249">            ps.execute();</span>
+<span class="fc" id="L250">            return true;</span>
+
+<span class="nc" id="L252">        } catch (Exception e) {</span>
+<span class="nc" id="L253">            throw new Exception(&quot;Failed to append segment: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	private Playlist generatePlaylist(ResultSet resultSet) throws Exception {
+<span class="fc" id="L258">		String name  = resultSet.getString(&quot;name&quot;);</span>
+<span class="fc" id="L259">		String seg_id  = resultSet.getString(&quot;seg_id&quot;);</span>
+<span class="fc" id="L260">		int seg_order = resultSet.getInt(&quot;seg_order&quot;);</span>
+<span class="fc" id="L261">		return new Playlist(name, seg_id, seg_order);</span>
+	}
+	
+	private Playlistname generatePlaylistname(ResultSet resultSet) throws Exception {
+<span class="fc" id="L265">		String name  = resultSet.getString(&quot;name&quot;);</span>
+<span class="fc" id="L266">		return new Playlistname(name);</span>
+	}
+	
+	private int generateInteger(ResultSet resultSet) throws Exception {
+<span class="fc" id="L270">		int count  = resultSet.getInt(&quot;seg_order&quot;);</span>
+<span class="fc" id="L271">		return count;</span>
+	}
+	
+	private int generateInteger2(ResultSet resultSet) throws Exception {
+<span class="fc" id="L275">		int count  = resultSet.getInt(&quot;COUNT(name)&quot;);</span>
+<span class="fc" id="L276">		return count;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ListRDSPlaylistsHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">renown.app</a> &gt; <span class="el_source">ListRDSPlaylistsHandler.java</span></div><h1>ListRDSPlaylistsHandler.java</h1><pre class="source lang-java linenums">package renown.app;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.amazonaws.services.lambda.runtime.*;
+import renown.app.db.PlaylistsDAO;
+import renown.app.http.*;
+import renown.app.model.Playlist;
+import renown.app.model.Playlistname;
+
+<span class="fc" id="L13">public class ListRDSPlaylistsHandler implements RequestHandler&lt;ListPlaylistsRequest,AllPlaylistsResponse&gt; {</span>
+
+	public LambdaLogger logger;
+
+	/** Load from RDS, if it exists
+	 * 
+	 * @throws Exception 
+	 */
+	List&lt;Playlistname&gt; getPlaylists() throws Exception {
+<span class="fc" id="L22">		logger.log(&quot;in getPlaylists&quot;);</span>
+<span class="fc" id="L23">		PlaylistsDAO dao = new PlaylistsDAO();</span>
+		
+<span class="fc" id="L25">		return dao.getAllPlaylistnames();</span>
+	}
+	
+	@Override
+	public AllPlaylistsResponse handleRequest(ListPlaylistsRequest input, Context context)  {
+<span class="fc" id="L30">		logger = context.getLogger();</span>
+<span class="fc" id="L31">		logger.log(&quot;Loading Java Lambda handler to list all playlists&quot;);</span>
+
+<span class="fc" id="L33">		Map&lt;String,String&gt; map = System.getenv();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (String k: map.keySet()) {</span>
+<span class="fc" id="L35">			logger.log(k + &quot;=&quot; + map.get(k));</span>
+		}
+		AllPlaylistsResponse response;
+		try {
+<span class="fc" id="L39">			List&lt;Playlistname&gt; list = getPlaylists();</span>
+<span class="fc" id="L40">			ArrayList&lt;Playlistname&gt; segList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">			for (Playlistname p : list) {</span>
+<span class="fc" id="L42">					segList.add(p);</span>
+			}
+			
+<span class="fc" id="L45">			response = new AllPlaylistsResponse(segList, 200);</span>
+<span class="pc" id="L46">		} catch (Exception e) {</span>
+<span class="nc" id="L47">			response = new AllPlaylistsResponse(400, e.getMessage());</span>
+		}
+		
+<span class="fc" id="L50">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

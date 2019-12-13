@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ListSegmentsTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">renown.app</a> &gt; <span class="el_source">ListSegmentsTest.java</span></div><h1>ListSegmentsTest.java</h1><pre class="source lang-java linenums">package renown.app;
+
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import renown.app.http.*;
+import renown.app.model.Segment;
+
+/**
+ * A simple test harness for locally invoking your Lambda function handler.
+ */
+<span class="fc" id="L14">public class ListSegmentsTest extends LambdaTest {</span>
+	
+    @Test
+    public void testListSegments() throws IOException {
+<span class="fc" id="L18">    	ListRDSSegmentsHandler handler = new ListRDSSegmentsHandler();</span>
+<span class="fc" id="L19">    	ListSegmentsRequest req = new ListSegmentsRequest();</span>
+<span class="fc" id="L20">    	req.toString();</span>
+
+<span class="fc" id="L22">        AllSegmentsResponse resp = handler.handleRequest(null, createContext(&quot;list&quot;));</span>
+<span class="fc" id="L23">        AllSegmentsResponse decresp = new AllSegmentsResponse(400,&quot;error&quot;);</span>
+<span class="fc" id="L24">        decresp.toString();</span>
+<span class="fc" id="L25">        boolean FOX1 = false;</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        for (Segment s : resp.list) {</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        	if (s.id.equals(&quot;FOX1&quot;)) { FOX1 = true; break; }</span>
+        }
+<span class="fc" id="L29">        Assert.assertTrue(&quot;FOX1 Needs to exist in the constants table (from tutorial) for this test case to work.&quot;, FOX1);</span>
+<span class="fc" id="L30">        Assert.assertEquals(200, resp.statusCode);</span>
+<span class="fc" id="L31">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

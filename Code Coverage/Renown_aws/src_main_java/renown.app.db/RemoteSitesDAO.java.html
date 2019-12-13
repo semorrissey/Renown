@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RemoteSitesDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">renown.app.db</a> &gt; <span class="el_source">RemoteSitesDAO.java</span></div><h1>RemoteSitesDAO.java</h1><pre class="source lang-java linenums">package renown.app.db;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import renown.app.model.*;
+
+public class RemoteSitesDAO {
+
+	java.sql.Connection conn;
+
+<span class="fc" id="L13">	public RemoteSitesDAO() {</span>
+		try  {
+<span class="fc" id="L15">			conn = DatabaseUtil.connect();</span>
+<span class="pc" id="L16">		} catch (Exception e) {</span>
+<span class="nc" id="L17">			conn = null;</span>
+		}
+<span class="fc" id="L19">	}</span>
+
+	public List&lt;RemoteSite&gt; getAllRemoteSites() throws Exception {
+
+<span class="fc" id="L23">		List&lt;RemoteSite&gt; allSites = new ArrayList&lt;&gt;();</span>
+		try {
+<span class="fc" id="L25">			Statement statement = conn.createStatement();</span>
+<span class="fc" id="L26">			String query = &quot;SELECT * FROM sites&quot;;</span>
+<span class="fc" id="L27">			ResultSet resultSet = statement.executeQuery(query);</span>
+
+<span class="fc bfc" id="L29" title="All 2 branches covered.">			while (resultSet.next()) {</span>
+<span class="fc" id="L30">				RemoteSite s = generateRemoteSite(resultSet);</span>
+<span class="fc" id="L31">				allSites.add(s);</span>
+			}
+<span class="fc" id="L33">			resultSet.close();</span>
+<span class="fc" id="L34">			statement.close();</span>
+<span class="fc" id="L35">			return allSites;</span>
+
+<span class="nc" id="L37">		} catch (Exception e) {</span>
+<span class="nc" id="L38">			throw new Exception(&quot;Failed in getting books: &quot; + e.getMessage());</span>
+		}
+	}
+	
+	public RemoteSite getRemoteSite(String site_url) throws Exception {
+        
+        try {
+<span class="fc" id="L45">            RemoteSite remotesite = null;</span>
+<span class="fc" id="L46">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM sites WHERE site_url=?;&quot;);</span>
+<span class="fc" id="L47">            ps.setString(1,  site_url);</span>
+<span class="fc" id="L48">            ResultSet resultSet = ps.executeQuery();</span>
+            
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L51">                remotesite = generateRemoteSite(resultSet);</span>
+            }
+<span class="fc" id="L53">            resultSet.close();</span>
+<span class="fc" id="L54">            ps.close();</span>
+            
+<span class="fc" id="L56">            return remotesite;</span>
+
+<span class="nc" id="L58">        } catch (Exception e) {</span>
+<span class="nc" id="L59">        	e.printStackTrace();</span>
+<span class="nc" id="L60">            throw new Exception(&quot;Failed in getting remote site: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	public boolean addRemoteSite(RemoteSite remotesite) throws Exception {
+        try {
+<span class="fc" id="L66">            PreparedStatement ps = conn.prepareStatement(&quot;SELECT * FROM sites WHERE site_url = ?;&quot;);</span>
+<span class="fc" id="L67">            ps.setString(1, remotesite.site_url);</span>
+<span class="fc" id="L68">            ResultSet resultSet = ps.executeQuery();</span>
+            
+            // already present?
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L72">                RemoteSite rs = generateRemoteSite(resultSet);</span>
+<span class="nc" id="L73">                resultSet.close();</span>
+<span class="nc" id="L74">                return false;</span>
+            }
+
+<span class="fc" id="L77">            ps = conn.prepareStatement(&quot;INSERT INTO sites (site_name,site_url) values(?,?);&quot;);</span>
+<span class="fc" id="L78">            ps.setString(1, remotesite.site_name);</span>
+<span class="fc" id="L79">            ps.setString(2, remotesite.site_url);</span>
+<span class="fc" id="L80">            ps.execute();</span>
+<span class="fc" id="L81">            return true;</span>
+
+<span class="nc" id="L83">        } catch (Exception e) {</span>
+<span class="nc" id="L84">            throw new Exception(&quot;Failed to insert remote site: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	public boolean deleteRemoteSite(String site_url) throws Exception {
+        try {
+<span class="fc" id="L90">            PreparedStatement ps = conn.prepareStatement(&quot;DELETE FROM sites WHERE site_url = ?;&quot;);</span>
+<span class="fc" id="L91">            ps.setString(1, site_url);</span>
+<span class="fc" id="L92">            int numAffected = ps.executeUpdate();</span>
+<span class="fc" id="L93">            ps.close();</span>
+            
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            return (numAffected == 1);</span>
+
+<span class="nc" id="L97">        } catch (Exception e) {</span>
+<span class="nc" id="L98">            throw new Exception(&quot;Failed to delete remote site: &quot; + e.getMessage());</span>
+        }
+    }
+	
+	private RemoteSite generateRemoteSite(ResultSet resultSet) throws Exception {
+<span class="fc" id="L103">		String site_name  = resultSet.getString(&quot;site_name&quot;);</span>
+<span class="fc" id="L104">		String site_url = resultSet.getString(&quot;site_url&quot;);</span>
+<span class="fc" id="L105">		return new RemoteSite(site_name, site_url);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>

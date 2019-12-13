@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LambdaFunctionHandler.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Renown_aws (Dec 13, 2019 2:19:18 PM)</a> &gt; <a href="../../index.html" class="el_group">Renown_aws</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">renown.app</a> &gt; <span class="el_source">LambdaFunctionHandler.java</span></div><h1>LambdaFunctionHandler.java</h1><pre class="source lang-java linenums">package renown.app;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.S3Event;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+
+public class LambdaFunctionHandler implements RequestHandler&lt;S3Event, String&gt; {
+
+<span class="nc" id="L13">    private AmazonS3 s3 = AmazonS3ClientBuilder.standard().build();</span>
+
+<span class="nc" id="L15">    public LambdaFunctionHandler() {}</span>
+
+    // Test purpose only.
+<span class="nc" id="L18">    public LambdaFunctionHandler(AmazonS3 s3) {</span>
+<span class="nc" id="L19">        this.s3 = s3;</span>
+<span class="nc" id="L20">    }</span>
+
+    @Override
+    public String handleRequest(S3Event event, Context context) {
+<span class="nc" id="L24">        context.getLogger().log(&quot;Received event: &quot; + event);</span>
+
+        // Get the object from the event and show its content type
+<span class="nc" id="L27">        String bucket = event.getRecords().get(0).getS3().getBucket().getName();</span>
+<span class="nc" id="L28">        String key = event.getRecords().get(0).getS3().getObject().getKey();</span>
+        try {
+<span class="nc" id="L30">            S3Object response = s3.getObject(new GetObjectRequest(bucket, key));</span>
+<span class="nc" id="L31">            String contentType = response.getObjectMetadata().getContentType();</span>
+<span class="nc" id="L32">            context.getLogger().log(&quot;CONTENT TYPE: &quot; + contentType);</span>
+<span class="nc" id="L33">            return contentType;</span>
+<span class="nc" id="L34">        } catch (Exception e) {</span>
+<span class="nc" id="L35">            e.printStackTrace();</span>
+<span class="nc" id="L36">            context.getLogger().log(String.format(</span>
+<span class="nc" id="L37">                &quot;Error getting object %s from bucket %s. Make sure they exist and&quot;</span>
+<span class="nc" id="L38">                + &quot; your bucket is in the same region as this function.&quot;, key, bucket));</span>
+<span class="nc" id="L39">            throw e;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Renown_aws (Dec 13, 2019 2:19:18 PM)</div></body></html>
