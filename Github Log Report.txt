@@ -1,0 +1,689 @@
+commit ad354594367a5484050d18ee455d9786201305c5
+Author: Thomas Vose <trvose@wpi.edu>
+Date:   Fri Dec 13 16:52:03 2019 -0500
+
+    Code Coverage
+
+commit 5927c513a135f1448c0abeef0b99f01894c686d8
+Author: Thomas Vose <trvose@wpi.edu>
+Date:   Fri Dec 13 16:47:28 2019 -0500
+
+    Testing and README.txt
+
+commit f55cc6f3653ce51b76c3bc4a764ac96c0fb31ba3
+Author: Nathan Jackson <nj49a@sbcglobal.net>
+Date:   Fri Dec 13 13:46:23 2019 -0500
+
+    Fixed user view
+
+commit 026a10912ed6bb8cf15f999259821bb30660bc37
+Author: Thomas Vose <trvose@wpi.edu>
+Date:   Fri Dec 13 13:18:17 2019 -0500
+
+    Testing JUnit
+
+commit 092f168504b1c0f5797e0ff8d0a2fcfde0134322
+Author: Eric Reardon <ericjreardon@gmail.com>
+Date:   Thu Dec 12 20:25:41 2019 -0500
+
+    Remove Segment re-ordering functionality
+
+commit e11266f6971c9475694c175b7e2c6984b8677cd1
+Author: Nathan Jackson <nj49a@sbcglobal.net>
+Date:   Thu Dec 12 20:22:06 2019 -0500
+
+    Added delete remote site
+
+commit 33bb0cced4712cf19eb44a73140c6194ea782e72
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 12 19:41:57 2019 -0500
+
+    fixed bug with double clicking on timeline
+
+commit 9f906f5a5a84b4cee7dd294e85e8d06773d41365
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 12 18:49:21 2019 -0500
+
+    workin version of everythin
+
+commit c52d381682e82b19d7597d8c477bdde3a396e1a5
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Thu Dec 12 18:02:06 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit fa1f201c46441811d2e29c2803d73ec73330aea9
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 12 15:52:42 2019 -0500
+
+    reviewed the requirements and added what is needed
+
+commit 59240dc64437a1c9fde9384afb3f46c314057830
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Dec 11 22:11:33 2019 -0500
+
+    remove functionality with database added
+
+commit a2c56125fba9af6091788105260bb37bded3ed03
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Dec 11 18:00:49 2019 -0500
+
+    fixed small bug with removing last video in playlist
+
+commit 842160ba352e7763977eacacbd48bce25eb5f312
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Dec 11 17:39:58 2019 -0500
+
+    improved remove functionality
+
+commit 954f4c9e206c26884875ad1032a0607d4e16b4e5
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Dec 11 17:16:04 2019 -0500
+
+    added remove from timeline functionality
+
+commit 0dadf8d7a8b84410bfa6d6340db28479ebd80268
+Merge: 5945e20 d231e03
+Author: trvose <trvose@wpi.edu>
+Date:   Wed Dec 11 14:20:25 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown.git
+
+commit d231e03ab581a5b1007df7ab2c1956f4645243cd
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Wed Dec 11 14:19:39 2019 -0500
+
+    remove segment functionality
+
+commit 5945e20fcdaf5211c8e3f1b2f6d5568477620533
+Merge: 4adb8ad 17c8fbe
+Author: trvose <trvose@wpi.edu>
+Date:   Wed Dec 11 14:07:42 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown.git
+
+commit 4adb8ad4de2b5ea97dd01f5408ff6123a1c28111
+Author: trvose <trvose@wpi.edu>
+Date:   Wed Dec 11 14:02:41 2019 -0500
+
+    ListRemotesTest is functional, needs a remote site in database that has
+    a site_name "Test"
+
+commit 17c8fbe229f71cd79d5fd073dd41ae49c67ab92c
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Dec 10 20:55:35 2019 -0500
+
+    create playlist clear functionality
+    
+    when you create a playlist the text field is cleared once you click the button.
+
+commit a461519a2cb119225e0fa9648240231c4e7c99f2
+Merge: 3683525 46ba5dd
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Dec 10 18:45:26 2019 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 3683525447872ee25e765ce6f25df6eae5fb6469
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Dec 10 18:44:03 2019 -0500
+
+    temp upload
+
+commit 46ba5dd70df8754a121f2eebebc122ec9bcfc57a
+Merge: 58fa3bd f816fda
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Tue Dec 10 18:15:19 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit 58fa3bda9f5d16040be524efa6a5da8b8f1084f6
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Tue Dec 10 18:15:14 2019 -0500
+
+    Cleaned up console
+
+commit f816fdabdf17bf6a03540cdeb3e9a1df72f90973
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Dec 10 17:53:30 2019 -0500
+
+    unregister site, remove segment, mark segment functionality
+
+commit 1681df4ecc5220c2b5bea84fae7d8806882ef311
+Merge: af54d8e cdc94c5
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Tue Dec 10 17:31:08 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit af54d8edb5779bac77c9fd1e4313e383cd3deca1
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Tue Dec 10 17:31:01 2019 -0500
+
+    Update renown.js
+
+commit cdc94c5601fe39a860cbfc962ef926d8d0314a06
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Dec 10 14:01:06 2019 -0500
+
+    resolved clicking issue with tabs
+
+commit 1968ea25492d90fabc2c0f53c4baa9a4ee29ea0b
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Mon Dec 9 19:07:13 2019 -0500
+
+    fixed user landing page
+    
+    supposedly was not up to date so made the necessary changes.
+
+commit 65651f382e317c58a872216d7390ff9c3df73920
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 22:19:00 2019 -0500
+
+    Update renown.js
+
+commit 2da512f5bdc03b7f42a4efed92125b6a5d3e25e4
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 21:37:28 2019 -0500
+
+    So much
+
+commit 008681c3ac0a30e6d41b46781c5601c5b5afa3a1
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 20:47:52 2019 -0500
+
+    Update renown.js
+
+commit 28f863a159494ba341551094c7fade3bb2c1fd96
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Sat Dec 7 20:10:32 2019 -0500
+
+    list sites
+
+commit 0f2ecc7dd52d66d9258e285bb5f18921fa3913a8
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 19:58:54 2019 -0500
+
+    Update admin.html
+
+commit 7c3b591263b17500a7b26390159b9add39d6ef28
+Merge: fc3f9c9 5ab5b44
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 19:44:23 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit fc3f9c9312f79a0641f150631a719b466d39dcea
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 19:44:20 2019 -0500
+
+    Added Upload
+
+commit 5ab5b44e82b2e5df2ff2938bdffa387a8e20e8b8
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Sat Dec 7 19:43:18 2019 -0500
+
+    problems withbutton
+
+commit 557e9eac7e70ce99a821be8fc6173da320124324
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Sat Dec 7 19:31:31 2019 -0500
+
+     show playlists
+
+commit f266fff8f1353de587b89e32992ed28a417861a1
+Merge: a740733 ff50668
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 19:09:29 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit a740733e56f0484dfcf2753c6e86cb9bdad1bd0e
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 19:09:16 2019 -0500
+
+    Fixed Search
+    
+    I am Phat Dumb
+
+commit ff5066826aede718f0fbdc47b5e0bbdb1bf1c545
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Sat Dec 7 18:56:29 2019 -0500
+
+    Register site and upload segment
+
+commit c11e215f08aa8b4da5603cf9557d8089ab6e70f6
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 18:53:48 2019 -0500
+
+    Added Search
+    
+    Added Search
+
+commit 34ef5305401af4adeb413d6da86f8c02e3f1544a
+Merge: c83e2c9 c9f9554
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 18:08:03 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit c83e2c91ca58ce688a24c505c1b623d8dd121731
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Sat Dec 7 18:07:57 2019 -0500
+
+    Update renown.js
+
+commit c9f955403085e2a019be6d940e85a249e2a1d1f5
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Sat Dec 7 18:05:39 2019 -0500
+
+    implemented append segment
+
+commit 28364f5c51c17f40934d4883da0e57ebe972d32e
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Sat Dec 7 16:48:30 2019 -0500
+
+    list remote sites
+
+commit fc88ccb86d34e53bd8bce29fbc8e5eefb0d28188
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Sat Dec 7 16:21:12 2019 -0500
+
+    segmentsDAO and register site
+
+commit 25358118ab475d9694a6d58940df8126c4992b76
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Fri Dec 6 17:22:24 2019 -0500
+
+    default constructor added
+
+commit 036f665aad00c196ca1616a2ad6cc60bf9924b97
+Merge: edf91a9 d8fb5d2
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Fri Dec 6 16:58:49 2019 -0500
+
+    search segments functionality
+
+commit edf91a9456a703278856d196e71f74c5dc68a823
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Fri Dec 6 16:56:11 2019 -0500
+
+    search segments functionality
+
+commit d8fb5d2044894b102d072301baa1e295fe13307c
+Merge: ca21fc3 ebb5585
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Fri Dec 6 16:52:14 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit ca21fc39daacaf00c2bb5050789817f05ce82477
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Fri Dec 6 16:52:10 2019 -0500
+
+    Update renown.js
+    
+    Added ApppendSegment Support
+
+commit ebb55852edb07d8cbca868cf99f257d20d514190
+Author: trvose <trvose@wpi.edu>
+Date:   Fri Dec 6 16:23:19 2019 -0500
+
+    Search Update
+
+commit c7e250d823e7bc44540b1aafeb9ce7b3721a179d
+Author: trvose <trvose@wpi.edu>
+Date:   Fri Dec 6 16:20:16 2019 -0500
+
+    Search Update
+
+commit a12565eff12d6e90de01cb00a6a70db976bffe76
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Fri Dec 6 13:31:29 2019 -0500
+
+    show playlist handler
+
+commit df903b6d1c83c8b8b09d381395a033ef3fbc0d1b
+Merge: 22b79a3 696e557
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Fri Dec 6 11:09:56 2019 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 22b79a3bd028330ba25cea1b000cdb898a0cbeb1
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Fri Dec 6 11:09:12 2019 -0500
+
+    fixed DeleteSegment Integration
+    
+    DeleteSegment is now functional
+
+commit 696e557912e215c95ce6bd7784a3a7837c61a279
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Thu Dec 5 18:34:36 2019 -0500
+
+    sql correction
+
+commit d9597f61970de5d52b2dc2636273d5673bf2df92
+Merge: 377262b 19874ab
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 5 18:32:56 2019 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 377262b78df45ca48b3e6e1c4b253f36baa7f23b
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 5 18:32:52 2019 -0500
+
+    added local integration to renown.js
+    
+     delete playlist and create playlist work with aws
+
+commit 19874abaac65fe8c0c826852f74b59a3d6a149e9
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Thu Dec 5 18:30:10 2019 -0500
+
+    sql statement correction
+
+commit 38751801d91162a0a16977d4d7f9a7dd8077426f
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Thu Dec 5 18:26:53 2019 -0500
+
+    lambda for append segment
+
+commit b8489b7bf2874848f71e51fafef22c3cf93275e6
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Thu Dec 5 18:11:52 2019 -0500
+
+    append segment functionality
+
+commit b50a33338361dc93484fe206d26d9ea105de7fcb
+Merge: 5165a4a bd2a25d
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Thu Dec 5 18:09:55 2019 -0500
+
+    Merge branch 'master' of https://github.com/semorrissey/Renown
+
+commit 5165a4abbb00800e76d634c94ea6e622d77df42c
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Thu Dec 5 18:08:57 2019 -0500
+
+    Update renown.js
+
+commit bd2a25de544bad057b498b897cc1f598a97ad5b3
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 5 18:08:51 2019 -0500
+
+    added necessary ui to user.html
+
+commit c1a96c01f80d9163fe771387a34e3eb1d1c0c2b1
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Thu Dec 5 17:38:16 2019 -0500
+
+    began working on timeline functionality
+
+commit a43d635d89ea8ef5505a31f0dd47f5b7d8eeeff6
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Wed Dec 4 16:40:13 2019 -0500
+
+    create playlist
+
+commit 028fadb25ead195b530d40aa86e103b72c56daa5
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Wed Dec 4 16:04:04 2019 -0500
+
+    new request for all playlist names
+
+commit 17b745a726e175afe97222974111b6f8013f1a3a
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Wed Dec 4 14:22:08 2019 -0500
+
+    playlist and segment handlers
+
+commit bf98b2c9f00dcebb5aa8d2bad6f33e9b08f8bdc8
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Dec 4 14:12:41 2019 -0500
+
+     added aws integration to web app
+
+commit c45bf6ff78a02f70df34615860e88af45a2db362
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 23:38:21 2019 -0500
+
+    user and admin pages updated
+
+commit 16b4201747ed76462735c0af901a484972e70a22
+Author: trvose <trvose@wpi.edu>
+Date:   Tue Nov 26 23:19:16 2019 -0500
+
+    Added c to spock
+
+commit 67df712650db7972356d955c0ce1042d9e9071eb
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 23:13:46 2019 -0500
+
+    Library functionality updated again
+    
+    videos appear in tab.
+
+commit dadd68285fa8f59d5b955676cdc8143873c60b9e
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 22:40:25 2019 -0500
+
+    Library functionality updated
+
+commit dec189d84692a47c40d883ef316411afa64aa944
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 22:14:51 2019 -0500
+
+    functionality began for video library
+
+commit f8c352015bed68850670304d10591285ebfcceda
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 21:09:58 2019 -0500
+
+    small
+
+commit b43fc5c85c3bbebafc099fba94cbf251faa76ed3
+Merge: 80bb455 b283657
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 20:32:55 2019 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 80bb455a369f88c30cbb6a17040ded2cd2337cb7
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 20:32:51 2019 -0500
+
+    functionality for playlist and library
+
+commit b2836576775dfa0fc5307b45a4a9d052b4cc5121
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 20:18:32 2019 -0500
+
+    new gateway endpoint
+
+commit d1ed9523b93e237a2d6c55e5af5a61261b956d95
+Merge: 09a3ee3 7f5ee57
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 19:50:43 2019 -0500
+
+    js
+
+commit 09a3ee3add14627ddec66d6f0726e212a88abcc6
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 19:48:36 2019 -0500
+
+    js
+
+commit 7f5ee575ddb3e30ead96e2019622c43c5aad26ff
+Merge: 763647b 056a44d
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 18:52:20 2019 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 763647b7139f236dfe84514f19a1ac67648c41b4
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 18:52:16 2019 -0500
+
+    html changes
+    
+    added a bit more functionality to html and began writing js portions
+
+commit 056a44d74dc4320b9a582bd619d4216299362fde
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 18:32:11 2019 -0500
+
+    Segment object update with url
+
+commit bdce3a252524c470d2e18e483caf36952791016f
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 18:16:31 2019 -0500
+
+    Test for db and lambda handlers
+
+commit 6c3583b9c86b4430124fdef0daa5729800db334d
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 18:13:07 2019 -0500
+
+    changed html abit
+
+commit c7ee56cee1e520af3f936c711074d0ed7a3c2edb
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 17:31:27 2019 -0500
+
+    Segment and Playlist handlers
+
+commit 465012700b704b25316d13699aa61c5fbe059e59
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 15:29:57 2019 -0500
+
+    html added
+
+commit e5b95b7c20cda406f6f5255772cf875a32b0c649
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 15:03:31 2019 -0500
+
+    fixed build path
+
+commit 61ef8d6b475d2886b110edc5af3393afcfa4d410
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 14:58:35 2019 -0500
+
+    fixed again
+
+commit 1e73ce3e63341f19b19993c1d54dc27e04d0f7f6
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Tue Nov 26 14:57:02 2019 -0500
+
+    restart
+
+commit 9a59adaae6a37ee2ca66767551698207acaf9c01
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 14:32:48 2019 -0500
+
+    new aws lambda java project
+
+commit 5395eab4ee233378922a48b5922aeffc00f6b7d3
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 14:09:37 2019 -0500
+
+    http package
+
+commit 31562b70ac2582023976285e496696d2d83d05bd
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 13:50:44 2019 -0500
+
+    package updates
+
+commit 27fee90a2e88e9f3f9907183c92ee5b50b421b1f
+Merge: a989e21 9761d85
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 13:42:33 2019 -0500
+
+    Added referenced libraries
+
+commit a989e2176df2bea9a5fd427a09777f8eff9faad0
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 13:38:57 2019 -0500
+
+    Added referenced libraries
+
+commit 9761d852b37646e494f66b88b6f6c159b838793c
+Author: ejreardon <57968936+ejreardon@users.noreply.github.com>
+Date:   Tue Nov 26 13:24:49 2019 -0500
+
+    Update .classpath
+
+commit c702cd31b7cd8f95da6ee7f672e5c513235c3d82
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Tue Nov 26 13:07:14 2019 -0500
+
+    Added referenced libraries
+
+commit 9058b12aed1c28116c842767d873705319a020df
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 19:51:39 2019 -0500
+
+    Playlist and Segment classes and DAO
+
+commit 6f09ceb1b88c7af34286fb99b31066b9e3495548
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Mon Nov 25 19:43:52 2019 -0500
+
+    Updated the Daos
+
+commit 573488ca8b392283d50c1d8a2c2ebab4dc03a492
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 19:31:49 2019 -0500
+
+    DButil
+
+commit f898ba047014c8325ad03c3cd8cb190b96477163
+Author: Nj49a <nj49a@sbcglobal.net>
+Date:   Mon Nov 25 19:20:03 2019 -0500
+
+    Added DAOs
+
+commit 0354ff709c9444dbd0ed9771c4da12429f975f29
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 19:10:55 2019 -0500
+
+    model classes
+
+commit 1715a327f2b592f93ef292ca117ad32e34c8360f
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 19:06:03 2019 -0500
+
+    db package
+
+commit 0a428a0a4aadfc4269deeb4d0cb6c25776de09ec
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 18:58:51 2019 -0500
+
+    Added java workspace
+
+commit 328106adb2e2ff2b36dfe3116a0a5699ef8734e9
+Author: trvose <trvose@wpi.edu>
+Date:   Mon Nov 25 18:28:42 2019 -0500
+
+    T
+
+commit 7dbb0f20e98a22aa670ffc04e2b9d4950c377bc7
+Author: ejreardon <ejreardon@wpi.edu>
+Date:   Mon Nov 25 18:23:19 2019 -0500
+
+    E
+
+commit 10f52ed5d04f5fe494e7a0743aaa272264dbe245
+Author: Eric Reardon <ericreardon@Erics-MacBook-Pro-3.local>
+Date:   Mon Nov 25 18:20:56 2019 -0500
+
+    added Renown folder
+
+commit 20a3b96b8c1d992d0cbe7e7dd493cf9ac2d9342d
+Author: Sean Morrissey <semorrissey17@gmail.com>
+Date:   Wed Nov 20 21:28:06 2019 -0500
+
+    Initial commit
