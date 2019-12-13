@@ -129,6 +129,13 @@ public class PlaylistsDAO {
 		
 		int order = playlist.seg_order;
 		int max_order = getPlaylistLength(playlist.name) - 1;
+		List<Playlist> list = getPlaylists(playlist.name);
+		
+		ArrayList<Playlist> new_list = new ArrayList<Playlist>();
+		for(Playlist p : list) {
+			new_list.add(p);
+		}
+		new_list.remove(order-1);
 		try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE name = ? AND seg_id = ? AND seg_order = ?;");
             ps.setString(1, playlist.name);
@@ -137,22 +144,23 @@ public class PlaylistsDAO {
             int numAffected = ps.executeUpdate();
             ps.close();
             
-            List<Playlist> list = getPlaylists(playlist.name);
             int i;
             if (numAffected == 1) {
             	for (i=0; i<max_order; i++) {
-            		if(list.get(i).seg_order < order) {
+            		if(new_list.get(i).seg_order < order) {
             			//change nothing
             			continue;
             		}
             		//if its not less than the order, it muse be over, so decrement the seg_order
             		else {
             			//new update query
-            			int new_order = list.get(i).seg_order - 1;
+            			int new_order = new_list.get(i).seg_order - 1;
             			PreparedStatement ps1 = conn.prepareStatement("UPDATE playlists SET seg_order = ? WHERE name = ? AND seg_id = ?;");
             			ps1.setInt(1, new_order);
-            			ps1.setString(2, list.get(i).name);
-            			ps1.setString(3, list.get(i).seg_id);
+            			String new_name = new_list.get(i).name;
+            			ps1.setString(2, new_name);
+            			String new_seg_id = new_list.get(i).seg_id;
+            			ps1.setString(3, new_seg_id);
             			int numAffected1 = ps1.executeUpdate();
             			ps1.close();
             		}
@@ -165,6 +173,7 @@ public class PlaylistsDAO {
             throw new Exception("Failed to remove segment from playlist: " + e.getMessage());
         }
     }
+
 	
     public boolean addPlaylist(Playlistname playlist) throws Exception {
         try {
