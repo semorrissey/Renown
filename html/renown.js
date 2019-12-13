@@ -34,6 +34,7 @@ var upload_Segment= base_url + "uploadsegment";    // POST
 var list_sites   = base_url + "listsites";    // GET
 var register_site   = base_url + "registersite";    // POST
 var remove_segment = base_url + "removesegment"; //POST
+var unregister_Site = base_url + "unregistersite"; //POST
 
 function refreshSegmentsList() {
    var xhr = new XMLHttpRequest();
@@ -132,9 +133,7 @@ function processPlaylistListResponse(result) {
 function processSitesListResponse(result) {
   var js = JSON.parse(result);
   var sitesList = document.getElementById('sitesList');
-    
-  siteNames = [];
-  siteUrls = [];
+  resetRS();
     
   var output = "";
   for (var i = 0; i < js.list.length; i++) {
@@ -455,8 +454,34 @@ function handleUploadSiteClick(e)
       processCreateResponse("N/A");
     }
   };
+}
+
+function handleUnregisterSiteClick(e)
+{ 
+    var form = document.createForm;
+    var data = {};
+    data["site_url"] = selectedVideo.innerHTML;
+    console.log(selectedVideo.innerHTML);
     
    // location.reload();
+    var js = JSON.stringify(data);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", unregister_Site, true);
+    xhr.send(js);
+    
+    xhr.onloadend = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 if (xhr.status == 200) {
+	      processDeleteResponse(xhr.responseText);
+    	 } else {
+			  var js = JSON.parse(xhr.responseText);
+			  var err = js["response"];
+			  alert (err);
+    	 }
+    } else {
+      processDeleteResponse("N/A");
+    }
+  };
 }
 
 function clearDisplay(){
@@ -483,7 +508,6 @@ function resetPlaylists(){
 function resetRS(){
     siteNames = [];
     siteUrls = [];
-    refreshSitesList();
 }
 
 //Issue with global variables, global variabes are being updated but not in the instance the function is called within
@@ -518,6 +542,7 @@ function addVideos(){
 function addRS(){
     clearDisplay();
     currentTab = "remotesites";
+    refreshSitesList();
     var i ;
     for(i = 0; i<siteNames.length;i++){
     var name = document.createElement('p');
