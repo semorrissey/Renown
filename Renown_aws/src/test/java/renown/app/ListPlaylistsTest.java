@@ -17,9 +17,13 @@ public class ListPlaylistsTest extends LambdaTest {
     @Test
     public void testListPlaylists() throws IOException {
     	ListRDSPlaylistsHandler handler = new ListRDSPlaylistsHandler();
+    	ListPlaylistsRequest lreq = new ListPlaylistsRequest();
+    	lreq.toString();
 
         AllPlaylistsResponse resp = handler.handleRequest(null, createContext("list"));
-        
+        //decoy
+        AllPlaylistsResponse decoy = new AllPlaylistsResponse (400, "error");
+        decoy.toString();
         boolean Test = false;
         for (Playlistname p : resp.list) {
         	if (p.name.equals("Test")) { Test = true; break; }
